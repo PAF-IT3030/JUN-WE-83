@@ -180,16 +180,15 @@ const Profile = () => {
                     fontSize: "16px",
                     fontWeight: 600,
                     padding: "8px 16px",
-                    color: "#1E0443",
                   },
                   "& .MuiTabs-indicator": {
                     backgroundColor: "#1E0443",
                   },
                 }}>
-                <Tab label="POSTS" value="1" />
-                <Tab label="WORKOUT STATUS" value="2" />
-                <Tab label="PLANS" value="3" />
-                <Tab label="MEAL PLANS" value="4" />
+                <Tab label="POSTS" value="1" style={{color:"#1E0443"}} />
+                <Tab label="WORKOUT STATUS" value="2" style={{color:"#1E0443"}}/>
+                <Tab label="PLANS" value="3" style={{color:"#1E0443"}} />
+                <Tab label="MEAL PLANS" value="4" style={{color:"#1E0443"}}/>
               </TabList>
             </Box>
             <TabPanel value="1">
