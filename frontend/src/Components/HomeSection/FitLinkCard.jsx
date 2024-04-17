@@ -108,7 +108,7 @@ const FitLinkCard = () => {
           </div>
 
           <div className="mt-1">
-            <div className="cursor-pointer">
+            <div onClick={()=>navigate(`/fitlink/${3}`)} className="cursor-pointer">
               <p className="mb-2 p-0" style={{fontSize:"18px"}}>Quick Fitness Tips 👍</p>
               <img
                 className="w-[28rem] border border-gray-400 p-5 rounded-md"
