@@ -1,0 +1,29 @@
+.WorkoutStatusCard {
+  display: flex;
+  gap: 30px;
+}
+
+.imgSection img {
+  height: 60px;
+  width: auto;
+}
+
+.detail-sec {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.f-set {
+  display: flex;
+  gap: 40px;
+}
+
+.t-sec {
+  display: flex;
+  gap: 30px;
+}
+
+.userName {
+  font-weight: bold;
+}
