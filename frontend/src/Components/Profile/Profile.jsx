@@ -11,17 +11,18 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import FitLinkCard from "../HomeSection/FitLinkCard";
+import ProfileModal from "./ProfileModal";
 
 const Profile = () => {
   const [tabValue, setTabValue] = useState("1");
 
   const navigate = useNavigate();
 
-  const handleBack = () => navigate(-1);
+  const [openProfileModal, setOpenProfileModal] = useState(false);
+  const handleOpenProfileModel = () => setOpenProfileModal(true);
+  const handleClose = () => setOpenProfileModal(false);
 
-  const handleOpenProfileModel = () => {
-    console.log("open profile model");
-  };
+  const handleBack = () => navigate(-1);
 
   const handleFollowUser = () => {
     console.log("follow user");
@@ -178,10 +179,11 @@ const Profile = () => {
                   "& .MuiTab-root": {
                     fontSize: "16px",
                     fontWeight: 600,
-                    padding: '8px 16px'
+                    padding: "8px 16px",
+                    color: "#1E0443",
                   },
-                  '& .MuiTabs-indicator': {
-                    backgroundColor: '#1E0443',
+                  "& .MuiTabs-indicator": {
+                    backgroundColor: "#1E0443",
                   },
                 }}>
                 <Tab label="POSTS" value="1" />
@@ -191,13 +193,19 @@ const Profile = () => {
               </TabList>
             </Box>
             <TabPanel value="1">
-            {[1,1,1,1].map((item)=><FitLinkCard/>)}
+              {[1, 1, 1, 1].map((item) => (
+                <FitLinkCard />
+              ))}
             </TabPanel>
             <TabPanel value="2">users workout status</TabPanel>
             <TabPanel value="3">users plans</TabPanel>
             <TabPanel value="4">users meal plans</TabPanel>
           </TabContext>
         </Box>
+      </section>
+
+      <section>
+        <ProfileModal handleClose={handleClose} open={openProfileModal} />
       </section>
     </div>
   );
