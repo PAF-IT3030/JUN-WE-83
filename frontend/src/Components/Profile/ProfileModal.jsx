@@ -57,10 +57,10 @@ const theme = createTheme({
   },
 });
 
-export default function ProfileModal({open, handleClose}) {
-//   const [open, setOpen] = React.useState(false);
+export default function ProfileModal({ open, handleClose }) {
+  //   const [open, setOpen] = React.useState(false);
   const [uploading, setUploading] = React.useState(false);
- 
+
   const handleSubmit = (values) => {
     console.log("handle submit", values);
   };
@@ -87,7 +87,6 @@ export default function ProfileModal({open, handleClose}) {
 
   return (
     <div>
-      
       <Modal
         open={open}
         onClose={handleClose}

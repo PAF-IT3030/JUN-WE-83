@@ -1,5 +1,5 @@
 import { Avatar } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import profileImage from "../../Images/avatar.png";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -10,6 +10,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import PostImage from "../../Images/fitness-tips-1645774618.jpg";
+import ReplyModal from "./ReplyModal";
 
 const FitLinkCard = () => {
   const navigate = useNavigate();
@@ -17,6 +18,11 @@ const FitLinkCard = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const open = Boolean(anchorEl);
+
+  const [openReplyModal, setOpenReplyModal] = useState(false);
+  const handleOpenReplyModel = () => setOpenReplyModal(true);
+  const handleCloseReplyModal = () => setOpenReplyModal(false);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -29,16 +35,12 @@ const FitLinkCard = () => {
     handleClose();
   };
 
-  const handleOpenReplyModel = () => {
-    console.log("open model");
-  };
-
   const handleLikeFitLink = () => {
     console.log("handle like FitLink");
   };
 
   return (
-    <div className="">
+    <React.Fragment>
       {/*<div className='flex items-center font-semibold text-gray-700 py-2'>
 
 
@@ -149,7 +151,11 @@ const FitLinkCard = () => {
           </div>
         </div>
       </div>
-    </div>
+
+      <section>
+        <ReplyModal open={openReplyModal} handleClose={handleCloseReplyModal}/>
+      </section>
+    </React.Fragment>
   );
 };
 
