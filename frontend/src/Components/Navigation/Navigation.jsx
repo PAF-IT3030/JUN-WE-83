@@ -10,8 +10,8 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
 const Navigation = () => {
-
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -21,11 +21,10 @@ const Navigation = () => {
     setAnchorEl(null);
   };
 
-  const navigate = useNavigate();
-
   const handleLogout = () => {
     console.log("logout");
     handleClose();
+    navigate("/landing"); // Navigate to the LandingPage
   };
 
   return (
@@ -43,7 +42,9 @@ const Navigation = () => {
                 item.title === "Profile"
                   ? navigate(`/profile/${5}`)
                   : navigate(item.path)
-              }>
+              }
+              key={item.title} // Add a unique key to each item
+            >
               {item.icon}
               <p className="text-white font-semibold" style={{ fontSize: 20 }}>
                 {item.title}
@@ -73,7 +74,8 @@ const Navigation = () => {
             aria-controls={open ? "basic-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
-            onClick={handleClick}>
+            onClick={handleClick}
+          >
             <MoreHorizIcon style={{ color: "white", width: 35, height: 35 }} />
           </Button>
           <Menu
@@ -83,7 +85,8 @@ const Navigation = () => {
             onClose={handleClose}
             MenuListProps={{
               "aria-labelledby": "basic-button",
-            }}>
+            }}
+          >
             <MenuItem onClick={handleLogout} style={{ fontWeight: 300 }}>
               LOGOUT
             </MenuItem>
