@@ -8,6 +8,8 @@ import Profile from "../Profile/Profile";
 import FitLinkDetails from "../FitLinkDetails/FitLinkDetails";
 import WorkoutStatus from "../WorkoutStatus/WorkoutStatus";
 import Notification from "../Notifications/Notification";
+import PlanSharing from "../PlanSharing/planSharing";
+
 
 const HomePage = () => {
 
@@ -34,6 +36,7 @@ const HomePage = () => {
           <Route path="/fitlink/:id" element={<FitLinkDetails />}></Route>
           <Route path="/workoutstatus" element={<WorkoutStatus />}></Route>
           <Route path="/notifications" element={<Notification />}></Route>
+          <Route path="/plansharing" element={<PlanSharing />}></Route> 
         </Routes>
       </Grid>
 
