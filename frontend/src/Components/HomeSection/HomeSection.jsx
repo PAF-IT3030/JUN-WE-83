@@ -10,7 +10,6 @@ import SlideshowIcon from "@mui/icons-material/Slideshow";
 import * as Yup from "yup";
 import FitLinkCard from "./FitLinkCard";
 
-import React from "react";
 import WorkoutStatusCard from "../WorkoutStatusCard/WorkoutStatusCard";
 
 
@@ -128,7 +127,9 @@ const HomeSection = () => {
       </section>
 
       <section>
-      {[1,1].map((item)=> <FitLinkCard/>)}
+      {[1].map((item)=> <FitLinkCard/>)}
+      {[1].map((item)=> <WorkoutStatusCard/>)}
+
       </section>
     </div>
   );

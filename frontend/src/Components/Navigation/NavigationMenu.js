@@ -14,7 +14,7 @@ export const navigationMenu=[
     {
         title:"Notifications",
         icon:<NotificationsIcon style={{ color: 'white', width:35, height:35 }}/>,
-        path:"/notification"
+        path:"/notifications"
     },
     {
         title:"Create Workout Status",
