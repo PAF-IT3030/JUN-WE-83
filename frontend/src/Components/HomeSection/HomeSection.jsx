@@ -1,3 +1,4 @@
+
 import { Avatar, Button } from "@mui/material";
 import React, { useState } from "react";
 import { useFormik } from "formik";
@@ -8,6 +9,10 @@ import TagFacesIcon from "@mui/icons-material/TagFaces";
 import SlideshowIcon from "@mui/icons-material/Slideshow";
 import * as Yup from "yup";
 import FitLinkCard from "./FitLinkCard";
+
+import React from "react";
+import WorkoutStatusCard from "../WorkoutStatusCard/WorkoutStatusCard";
+
 
 const validationSchema = Yup.object().shape({
   content: Yup.string().required("FitLink text is required"),
@@ -46,6 +51,7 @@ const HomeSection = () => {
           style={{ marginLeft: 40, fontSize: 24, color: "#1E0443" }}>
           Home
         </h1>
+
       </section>
 
       <section className={`pb-10`}>

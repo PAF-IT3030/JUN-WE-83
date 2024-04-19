@@ -1,0 +1,36 @@
+.WorkoutStatus .head h2 {
+  text-align: center;
+  color: #1e0443;
+  font-weight: bold;
+  font-size: 30px;
+  margin-top: 30px;
+}
+
+.WorkoutStatus .form-sec {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.WorkoutStatus .form-sec input {
+  height: 70px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+}
+
+.WorkoutStatus .form-sec textarea {
+  height: 140px;
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
+.WorkoutStatus .form-sec button {
+  background-color: #1e0443;
+  opacity: 67%;
+  height: 60px;
+  color: white;
+  border-radius: 9px;
+  font-size: 20px;
+  font-weight: bold;
+}
