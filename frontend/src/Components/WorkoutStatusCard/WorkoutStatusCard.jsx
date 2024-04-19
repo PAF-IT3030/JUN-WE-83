@@ -11,6 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Avatar } from "@mui/material";
+import ReplyModal from "../HomeSection/ReplyModal";
 
 function WorkoutStatusCard() {
   const navigate = useNavigate();
@@ -18,6 +19,10 @@ function WorkoutStatusCard() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const open = Boolean(anchorEl);
+
+  const [openReplyModal, setOpenReplyModal] = useState(false);
+  const handleOpenReplyModel = () => setOpenReplyModal(true);
+  const handleCloseReplyModal = () => setOpenReplyModal(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -45,7 +50,7 @@ function WorkoutStatusCard() {
       />
       <div className="w-full">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2 cursor-pointer">
+          <div className="flex items-center WorkoutStatusCard cursor-pointer">
             <span className="font-semibold" style={{ fontSize: "18px" }}>
               Sewmi Madhu
             </span>
@@ -109,12 +114,12 @@ function WorkoutStatusCard() {
             <p className="p-0 mb-2" style={{ fontSize: "18px" }}>
               Quick Fitness Tips 👍
             </p>
-            <div className="flex p-5 border border-gray-400 rounded-md">
+            <div className="flex  border border-gray-400 rounded-md" style={{width:"70%"}}>
               <img className="w-[18rem]  p-5 rounded-md" src={wcard} alt="" />
               <div className="flex flex-col mt-20">
                 <h1 className="workoutname">Push Ups</h1>
-                <h2 className="workoutname2">15 reps</h2>
-                <p>2014.04.17</p>
+                <h2 style={{fontSize:"20px", fontWeight:600, textAlign:"center"}}>15 reps</h2>
+                <p style={{fontSize:"18px", textAlign:"center", marginTop:"20px", color:"green", fontWeight:600}}>2024.04.17</p>
               </div>
             </div>
           </div>
@@ -122,6 +127,7 @@ function WorkoutStatusCard() {
             <div className="flex items-center space-x-3 text-gray-600">
               <ChatBubbleOutlineIcon
                 className="cursor-pointer"
+                onClick={handleOpenReplyModel}
                 style={{ height: 30, width: 30 }}
               />
               <p>43</p>
@@ -145,11 +151,14 @@ function WorkoutStatusCard() {
                   style={{ height: 30, width: 30 }}
                 />
               )}
-              <p style={{ marginRight: 300 }}>54</p>
+              <p style={{ marginRight: 400 }}>54</p>
             </div>
           </div>
         </div>
       </div>
+      <section>
+        <ReplyModal open={openReplyModal} handleClose={handleCloseReplyModal}/>
+      </section>
     </div>
   );
 }

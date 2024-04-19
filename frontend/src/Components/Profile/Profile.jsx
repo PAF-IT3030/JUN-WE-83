@@ -12,6 +12,7 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import FitLinkCard from "../HomeSection/FitLinkCard";
 import ProfileModal from "./ProfileModal";
+import WorkoutStatusCard from "../WorkoutStatusCard/WorkoutStatusCard";
 
 const Profile = () => {
   const [tabValue, setTabValue] = useState("1");
@@ -185,10 +186,18 @@ const Profile = () => {
                     backgroundColor: "#1E0443",
                   },
                 }}>
-                <Tab label="POSTS" value="1" style={{color:"#1E0443"}} />
-                <Tab label="WORKOUT STATUS" value="2" style={{color:"#1E0443"}}/>
-                <Tab label="PLANS" value="3" style={{color:"#1E0443"}} />
-                <Tab label="MEAL PLANS" value="4" style={{color:"#1E0443"}}/>
+                <Tab label="POSTS" value="1" style={{ color: "#1E0443" }} />
+                <Tab
+                  label="WORKOUT STATUS"
+                  value="2"
+                  style={{ color: "#1E0443" }}
+                />
+                <Tab label="PLANS" value="3" style={{ color: "#1E0443" }} />
+                <Tab
+                  label="MEAL PLANS"
+                  value="4"
+                  style={{ color: "#1E0443" }}
+                />
               </TabList>
             </Box>
             <TabPanel value="1">
@@ -196,7 +205,11 @@ const Profile = () => {
                 <FitLinkCard />
               ))}
             </TabPanel>
-            <TabPanel value="2">users workout status</TabPanel>
+            <TabPanel value="2">
+              {[1, 1, 1, 1].map((item) => (
+                <WorkoutStatusCard />
+              ))}
+            </TabPanel>
             <TabPanel value="3">users plans</TabPanel>
             <TabPanel value="4">users meal plans</TabPanel>
           </TabContext>

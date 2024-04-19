@@ -7,14 +7,17 @@ import { Route, Routes } from "react-router-dom";
 import Profile from "../Profile/Profile";
 import FitLinkDetails from "../FitLinkDetails/FitLinkDetails";
 import WorkoutStatus from "../WorkoutStatus/WorkoutStatus";
+import Notification from "../Notifications/Notification";
 
 const HomePage = () => {
+
+
   return (
     <Grid
       container
       xs={12}
       className="justify-between px-5 lg:px-20"
-      style={{ backgroundColor: "#1E0443" }}>
+      style={{ backgroundColor: "#1E0443"}}>
       <Grid item xs={0} lg={2.5} className="relative hidden w-full lg:block">
         <Navigation />
       </Grid>
@@ -30,6 +33,7 @@ const HomePage = () => {
           <Route path="/profile/:id" element={<Profile />}></Route>
           <Route path="/fitlink/:id" element={<FitLinkDetails />}></Route>
           <Route path="/workoutstatus" element={<WorkoutStatus />}></Route>
+          <Route path="/notifications" element={<Notification />}></Route>
         </Routes>
       </Grid>
 

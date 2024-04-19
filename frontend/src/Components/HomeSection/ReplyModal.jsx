@@ -30,9 +30,22 @@ export default function ReplyModal({handleClose,open}) {
   const [uploadingImage, setUploadingImage] = React.useState(false);
   const [selectImage, setSelectedImage] = React.useState("");
 
+
   const handleSubmit = (values) => {
-    console.log("handle submit", values);
+    // Store the reply in local storage
+    const storedReplies = JSON.parse(localStorage.getItem("replies")) || [];
+    const newReply = {
+      id: storedReplies.length + 1,
+      content: values.content,
+      timestamp: new Date().toISOString(),
+    };
+    storedReplies.push(newReply);
+    localStorage.setItem("replies", JSON.stringify(storedReplies));
+
+    // Close the modal
+    handleClose();
   };
+
 
   const formik = useFormik({
     initialValues: {
