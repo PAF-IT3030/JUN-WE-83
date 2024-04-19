@@ -1,4 +1,5 @@
 import React from "react";
+import WorkoutStatusCard from "../WorkoutStatusCard/WorkoutStatusCard";
 
 
 const HomeSection = () => {
@@ -11,6 +12,7 @@ const HomeSection = () => {
           style={{ marginLeft: 40, fontSize: 24, color: "#1E0443" }}>
           Home
         </h1>
+
       </section>
 
      
