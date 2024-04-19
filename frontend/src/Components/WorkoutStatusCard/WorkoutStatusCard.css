@@ -4,7 +4,7 @@
 }
 
 .WorkoutStatusCard .img-sec img {
-  height: 70px;
+  height: 40px;
   width: auto;
 }
 
@@ -15,7 +15,7 @@
 }
 
 .WorkoutStatusCard .tt-img img {
-  height: 150px;
+  height: 70px;
   width: auto;
 }
 
@@ -27,7 +27,7 @@
 
 .WorkoutStatusCard .t-sec {
   border: 1px solid black;
-  padding: 40px;
+  padding: 30px;
   border-radius: 9px;
 }
 
@@ -42,7 +42,7 @@
   font-weight: bold;
 }
 
-.WorkoutStatusCard .workoutName {
+ .workoutname {
   font-size: 20px;
   font-weight: bold;
 }

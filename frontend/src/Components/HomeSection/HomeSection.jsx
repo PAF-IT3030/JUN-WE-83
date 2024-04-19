@@ -12,7 +12,7 @@ const HomeSection = () => {
           style={{ marginLeft: 40, fontSize: 24, color: "#1E0443" }}>
           Home
         </h1>
-        <WorkoutStatusCard/>
+
       </section>
 
      
