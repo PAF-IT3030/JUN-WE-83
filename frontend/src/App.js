@@ -10,6 +10,7 @@ function App() {
       <Routes>
       <Route path="/*" element={true?<HomePage/>:<Authentication/>}></Route>
       <Route path="/landing" element={<LandingPage/>}></Route>
+      <Route path="/authentication" element={<Authentication/>}></Route>
       </Routes>
     </div>
   );

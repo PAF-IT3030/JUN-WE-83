@@ -122,7 +122,7 @@ const HomeSection = () => {
       </section>
 
       <section>
-      {[1,1,1,1,1].map((item)=> <FitLinkCard/>)}
+      {[1,1].map((item)=> <FitLinkCard/>)}
       </section>
     </div>
   );

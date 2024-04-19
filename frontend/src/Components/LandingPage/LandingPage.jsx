@@ -129,6 +129,9 @@ export const LandingPage = () => {
             border: "1px solid white", // Setting border style to solid white
             marginLeft: "25%",
             marginTop: "2%",
+          }}
+          onClick={() => {
+            window.location.href = "http://localhost:3000/authentication";
           }}>
           SIGNIN
         </Button>
