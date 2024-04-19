@@ -33,7 +33,7 @@ function PlanSharing() {
         <input style = {{width:"50%"}} type="text" placeholder="No of Repetition" />
         </div>
 
-          <textarea type="text" placeholder="Workout Plans" />
+          
           <textarea type="text" placeholder="Goals" />
           <button type="submit">SHARE PLAN</button>
         </form>
