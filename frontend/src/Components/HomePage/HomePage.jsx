@@ -4,6 +4,8 @@ import Navigation from "../Navigation/Navigation";
 import HomeSection from "../HomeSection/HomeSection";
 import RightPart from "../RightPart/RightPart";
 import { Route, Routes } from "react-router-dom";
+import Profile from "../Profile/Profile";
+import FitLinkDetails from "../FitLinkDetails/FitLinkDetails";
 import WorkoutStatus from "../WorkoutStatus/WorkoutStatus";
 
 const HomePage = () => {
@@ -25,6 +27,8 @@ const HomePage = () => {
         style={{ backgroundColor: "#ffffff" }}>
         <Routes>
           <Route path="/" element={<HomeSection />}></Route>
+          <Route path="/profile/:id" element={<Profile />}></Route>
+          <Route path="/fitlink/:id" element={<FitLinkDetails />}></Route>
           <Route path="/workoutstatus" element={<WorkoutStatus />}></Route>
         </Routes>
       </Grid>
