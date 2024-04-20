@@ -112,7 +112,7 @@ function WorkoutStatusCard() {
         <div className="mt-1">
           <div className="cursor-pointer">
             <p className="p-0 mb-2" style={{ fontSize: "18px" }}>
-              Quick Fitness Tips 👍
+              My Current Fitness Status is good guys 😎
             </p>
             <div className="flex  border border-gray-400 rounded-md" style={{width:"70%"}}>
               <img className="w-[18rem]  p-5 rounded-md" src={wcard} alt="" />
@@ -130,7 +130,7 @@ function WorkoutStatusCard() {
                 onClick={handleOpenReplyModel}
                 style={{ height: 30, width: 30 }}
               />
-              <p>43</p>
+              <p>89</p>
             </div>
             <div
               className={`${
@@ -151,7 +151,7 @@ function WorkoutStatusCard() {
                   style={{ height: 30, width: 30 }}
                 />
               )}
-              <p style={{ marginRight: 400 }}>54</p>
+              <p style={{ marginRight: 400 }}>98</p>
             </div>
           </div>
         </div>

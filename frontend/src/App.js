@@ -3,6 +3,7 @@ import './App.css';
 import HomePage from './Components/HomePage/HomePage';
 import Authentication from './Components/Authentication/Authentication';
 import { LandingPage } from './Components/LandingPage/LandingPage';
+import RegisterAuthentication from './Components/Authentication/RegisterAuthentication';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Route path="/*" element={true?<HomePage/>:<Authentication/>}></Route>
       <Route path="/landing" element={<LandingPage/>}></Route>
       <Route path="/authentication" element={<Authentication/>}></Route>
+      <Route path="/registerauthentication" element={<RegisterAuthentication/>}></Route>
       </Routes>
     </div>
   );

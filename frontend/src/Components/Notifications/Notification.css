@@ -39,7 +39,7 @@
   position: absolute;
   top: 25px;
   right: 65px;
-  background-color: #ded945;
+  background-color: #fff702;
   border: none;
   padding: 3px 10px;
   font-size: 12px;
@@ -47,7 +47,7 @@
   font-size: 14px;
   border-radius: 5px;
   width: 70px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .new-button.hidden {

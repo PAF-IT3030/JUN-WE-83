@@ -99,6 +99,10 @@ export const LandingPage = () => {
               color: "white",
               fontSize: "18px",
               fontWeight: 600,
+            }}
+            onClick={() => {
+              window.location.href =
+                "http://localhost:3000/registerauthentication";
             }}>
             Create Account
           </Button>

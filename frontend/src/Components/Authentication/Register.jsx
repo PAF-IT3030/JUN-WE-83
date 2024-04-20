@@ -3,7 +3,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { TextField, createTheme, ThemeProvider, Button } from "@mui/material";
 import * as Yup from "yup";
 
-const initialValues = { email: "", password: "" };
+const initialValues = { fullname: "", email: "", password: "" };
 
 const theme = createTheme({
   palette: {
@@ -33,8 +33,9 @@ const theme = createTheme({
   },
 });
 
-const Login = () => {
+const Register = () => {
   const validationSchema = Yup.object().shape({
+    fullname: Yup.string().required("Full Name is required *"),
     email: Yup.string().email("Invalid email").required("Email is required *"),
     password: Yup.string()
       .min(8, "Password must be at least 8 characters")
@@ -55,6 +56,22 @@ const Login = () => {
           <Form className="space-y-10">
             <div className="space-y-10" style={{ marginTop: "6%" }}>
               <ThemeProvider theme={theme}>
+                <div>
+                  <Field
+                    as={TextField}
+                    name="fullname"
+                    placeholder="Full Name *"
+                    type="fullname"
+                    variant="outlined"
+                    fullWidth
+                    inputProps={{ style: { width: "100%", color: "white" } }}
+                  />
+                  <ErrorMessage
+                    name="fullname"
+                    component={"div"}
+                    className="text-red-500"
+                  />
+                </div>
                 <div>
                   <Field
                     as={TextField}
@@ -97,7 +114,7 @@ const Login = () => {
                 variant="contained"
                 disabled={!isValid} // Disable button if form is not valid
               >
-                signin
+                signup
               </Button>
               <h4
                 style={{
@@ -106,14 +123,14 @@ const Login = () => {
                   textAlign: "center",
                   color: "white",
                 }}>
-                Don't have an account?{" "}
+                Already have an account?{" "}
                 <b
                   style={{ color: "#1E0443" }}
                   onClick={() => {
                     window.location.href =
-                      "http://localhost:3000/registerauthentication";
+                      "http://localhost:3000/authentication";
                   }}>
-                  Sign Up
+                  Sign In
                 </b>
               </h4>
             </ThemeProvider>
@@ -124,4 +141,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
