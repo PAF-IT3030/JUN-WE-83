@@ -11,6 +11,8 @@ import * as Yup from "yup";
 import FitLinkCard from "./FitLinkCard";
 
 import WorkoutStatusCard from "../WorkoutStatusCard/WorkoutStatusCard";
+import PlanSharingCard from "../PlanSharingCard/PlanSharingCard";
+
 
 
 const validationSchema = Yup.object().shape({
@@ -129,6 +131,7 @@ const HomeSection = () => {
       <section>
       {[1].map((item)=> <FitLinkCard/>)}
       {[1].map((item)=> <WorkoutStatusCard/>)}
+      {[1].map((item)=> <PlanSharingCard/>)}
 
       </section>
     </div>
