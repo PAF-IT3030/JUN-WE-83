@@ -12,10 +12,10 @@ import { useNavigate } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Avatar } from "@mui/material";
 import ReplyModal from "../HomeSection/ReplyModal";
+import PendingActionsIcon from "@mui/icons-material/PendingActions";
 
 function PlanSharingCard() {
-
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -40,11 +40,10 @@ function PlanSharingCard() {
   const handleLikeFitLink = () => {
     console.log("handle like FitLink");
   };
-  
 
   return (
     <div className="flex space-x-5 ">
-    <Avatar
+      <Avatar
         className="cursor-pointer"
         alt="username"
         src={profileImage}
@@ -52,7 +51,7 @@ function PlanSharingCard() {
       />
 
       <div className="w-full">
-      <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between">
           <div className="flex items-center WorkoutStatusCard cursor-pointer">
             <span className="font-semibold" style={{ fontSize: "18px" }}>
               Sewmi Madhu
@@ -112,12 +111,78 @@ function PlanSharingCard() {
             </Menu>
           </div>
         </div>
+        
+        <div className="mt-1">
+          <div className="cursor-pointer">
+            <p className="p-0 mb-2" style={{ fontSize: "18px" }}>
+              Quick Fitness Tips 👍
+            </p>
+            <div className="flex flex-col  border border-gray-400 rounded-md" style={{width:"70%"}}>
+            <p style={{marginTop:"4px", color:"green", fontSize:"18px", marginLeft:"358px", fontWeight:600}}>My Plans</p>
+              <div className="flex flex-row mt-2">
+                <div className="flex flex-col">
+                  <b><h1 style={{fontSize:"24px",marginLeft:"20px"}}>Push Ups</h1></b>
+                  <h1 style={{fontSize:"20px" ,marginLeft:"20px"}}>2024.04.18</h1>
+                </div>
+
+                <div style={{marginLeft:"235px"}}>
+                  <PendingActionsIcon style={{width:70, height:70, color:"#A05AEA"}}/>
+                </div>
+              </div>
+
+              <div className="flex flex-row mt-7">
+                <h2 style={{fontSize:"18px", fontWeight:600, textAlign:"center", marginLeft:"20px"}}>No Of Sets - 03</h2>
+                <h2 style={{fontSize:"18px", fontWeight:600, textAlign:"center", marginLeft:"115px"}}>No Of Repetitions - 10</h2>
+              </div>
+
+              <div className="mt-4" style={{marginLeft:"20px", marginRight:"20px", marginBottom:"45px"}}>
+                <p style={{textAlign:"justify"}}>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley 
+                of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into 
+                electronic typesetting, remaining essentially unchanged.</p>
+              </div>
+            </div>
+
+            
+
+          </div>
+
+
+
+          <div className="flex flex-wrap items-center justify-between py-5">
+            <div className="flex items-center space-x-3 text-gray-600">
+              <ChatBubbleOutlineIcon
+                className="cursor-pointer"
+                onClick={handleOpenReplyModel}
+                style={{ height: 30, width: 30 }}
+              />
+              <p>43</p>
+            </div>
+            <div
+              className={`${
+                true ? "text-pink-600" : "text-gray-600"
+              } space-x-1 flex
+              items-center`}
+            >
+              {true ? (
+                <FavoriteIcon
+                  onClick={handleLikeFitLink}
+                  className="cursor-pointer"
+                  style={{ height: 30, width: 30 }}
+                />
+              ) : (
+                <FavoriteBorderIcon
+                  onClick={handleLikeFitLink}
+                  className="cursor-pointer"
+                  style={{ height: 30, width: 30 }}
+                />
+              )}
+              <p style={{ marginRight: 400 }}>54</p>
+            </div>
+          </div>
+        </div>
       </div>
-    
     </div>
-
-
-  )
+  );
 }
 
-export default PlanSharingCard
+export default PlanSharingCard;
