@@ -13,6 +13,7 @@ import TabPanel from "@mui/lab/TabPanel";
 import FitLinkCard from "../HomeSection/FitLinkCard";
 import ProfileModal from "./ProfileModal";
 import WorkoutStatusCard from "../WorkoutStatusCard/WorkoutStatusCard";
+import PlanSharingCard from "../PlanSharingCard/PlanSharingCard";
 
 const Profile = () => {
   const [tabValue, setTabValue] = useState("1");
@@ -210,8 +211,15 @@ const Profile = () => {
                 <WorkoutStatusCard />
               ))}
             </TabPanel>
-            <TabPanel value="3">users plans</TabPanel>
+
+             <TabPanel value="3">
+              {[1, 1, 1, 1].map((item) => (
+                <PlanSharingCard />
+              ))}
+            </TabPanel>
+
             <TabPanel value="4">users meal plans</TabPanel>
+
           </TabContext>
         </Box>
       </section>
