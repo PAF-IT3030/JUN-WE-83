@@ -23,10 +23,10 @@ function WorkoutStatus() {
     </section>
       <div className="formSection">
         <form className="form-sec">
-          <input type="text" placeholder="Exercise" />
-          <input type="date" placeholder="Date" />
-          <input type="text" placeholder="Matrix" />
-          <textarea type="text" placeholder="Description" />
+          <input type="text" placeholder="Exercise" required />
+          <input type="date" placeholder="Date" required/>
+          <input type="text" placeholder="Matrix" required/>
+          <textarea type="text" placeholder="Description" required/>
           <button type="submit">CREATE CURRENT STATUS</button>
         </form>
       </div>
