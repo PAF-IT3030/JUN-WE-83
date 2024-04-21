@@ -52,11 +52,6 @@ const Navigation = () => {
             </div>
           ))}
           
-           <Link to="/mealplan" className="cursor-pointer flex space-x-3 items-center">
-            <p className="text-white font-semibold" style={{ fontSize: 20 }}>
-              Meal Plan
-            </p>
-          </Link>
         </div>
       </div>
 
