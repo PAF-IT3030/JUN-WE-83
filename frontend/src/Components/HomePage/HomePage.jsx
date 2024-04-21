@@ -4,6 +4,8 @@ import Navigation from "../Navigation/Navigation";
 import HomeSection from "../HomeSection/HomeSection";
 import RightPart from "../RightPart/RightPart";
 import { Route, Routes } from "react-router-dom";
+import Sharemealplan from "../MealPlan/Sharemealplan";
+
 
 const HomePage = () => {
   return (
@@ -24,6 +26,9 @@ const HomePage = () => {
         style={{ backgroundColor: "#ffffff" }}>
         <Routes>
           <Route path="/" element={<HomeSection />}></Route>
+          <Route path="/MealPlan" element={<Sharemealplan/>}></Route>
+  
+        
         </Routes>
       </Grid>
 
