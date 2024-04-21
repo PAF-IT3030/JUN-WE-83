@@ -2,9 +2,9 @@ import React from "react";
 import { Card, Grid } from "@mui/material";
 import landingImage from "../../Images/landingImage.jpg";
 import landingbanner from "../../Images/landingbanner.png";
-import Login from "./Login";
+import Register from "./Register";
 
-const Authentication = () => {
+const RegisterAuthentication = () => {
   return (
     <div>
       <Grid container>
@@ -32,14 +32,14 @@ const Authentication = () => {
               className="card p-10"
               style={{
                 backgroundColor: "rgba(217, 217, 217, 0.35)",
-                height: "70%",
+                height: "85%",
                 borderRadius:"10px"
               }}>
               <div className="flex flex-col items-center mb-5 space-y-1">
                 <h1
                   className="logo text-center"
                   style={{ color: "white", fontSize: "38px", fontWeight: 600 }}>
-                  FitLink - SignIn
+                  FitLink - SignUp
                 </h1>
                 <p
                   className="text-center text-xl w-[70&]"
@@ -48,7 +48,7 @@ const Authentication = () => {
                   Your Fitness Social World, Your Way
                 </p>
               </div>
-              <Login />
+              <Register />
             </Card>
           </div>
         </Grid>
@@ -57,4 +57,4 @@ const Authentication = () => {
   );
 };
 
-export default Authentication;
+export default RegisterAuthentication;
