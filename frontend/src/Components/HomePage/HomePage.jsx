@@ -9,7 +9,7 @@ import FitLinkDetails from "../FitLinkDetails/FitLinkDetails";
 import WorkoutStatus from "../WorkoutStatus/WorkoutStatus";
 import Notification from "../Notifications/Notification";
 import PlanSharing from "../PlanSharing/planSharing";
-
+import Sharemealplan from "../MealPlan/Sharemealplan";
 
 const HomePage = () => {
 
@@ -32,11 +32,15 @@ const HomePage = () => {
         style={{ backgroundColor: "#ffffff" }}>
         <Routes>
           <Route path="/" element={<HomeSection />}></Route>
+
+          <Route path="/MealPlan" element={<Sharemealplan/>}></Route>
+
           <Route path="/profile/:id" element={<Profile />}></Route>
           <Route path="/fitlink/:id" element={<FitLinkDetails />}></Route>
           <Route path="/workoutstatus" element={<WorkoutStatus />}></Route>
           <Route path="/notifications" element={<Notification />}></Route>
           <Route path="/plansharing" element={<PlanSharing />}></Route> 
+
         </Routes>
       </Grid>
 

@@ -3,7 +3,7 @@ import FitLinkIcon from "../../Images/FitLink.png";
 import profileImage from "../../Images/avatar.png";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { navigationMenu } from "./NavigationMenu";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , Link } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
@@ -51,6 +51,12 @@ const Navigation = () => {
               </p>
             </div>
           ))}
+          
+           <Link to="/mealplan" className="cursor-pointer flex space-x-3 items-center">
+            <p className="text-white font-semibold" style={{ fontSize: 20 }}>
+              Meal Plan
+            </p>
+          </Link>
         </div>
       </div>
 
