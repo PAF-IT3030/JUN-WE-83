@@ -1,13 +1,11 @@
-
+import axios from "axios";
 import { Avatar, Button } from "@mui/material";
 import React, { useState } from "react";
-import { useFormik } from "formik";
 import ImageIcon from "@mui/icons-material/Image";
 import profileImage from "../../Images/avatar.png";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
 import SlideshowIcon from "@mui/icons-material/Slideshow";
-import * as Yup from "yup";
 import FitLinkCard from "./FitLinkCard";
 
 import WorkoutStatusCard from "../WorkoutStatusCard/WorkoutStatusCard";
@@ -15,34 +13,33 @@ import PlanSharingCard from "../PlanSharingCard/PlanSharingCard";
 
 
 
-const validationSchema = Yup.object().shape({
-  content: Yup.string().required("FitLink text is required"),
-});
-
 const HomeSection = () => {
-  const [uploadingImage, setUploadingImage] = useState(false);
-  const [selectImage, setSelectedImage] = useState("");
+  const [postId, setPostId]= useState("");
+  const [postDescription, setPostDescription] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
 
-  const handleSubmit = (values) => {
-    console.log("values", values);
-  };
+  async function save(event){
+    event.preventDefault();
 
-  const formik = useFormik({
-    initialValues: {
-      content: "",
-      image: "",
-    },
-    onSubmit: handleSubmit,
-    validationSchema,
-  });
+    // Validation: Check if description is not empty
+    if (!postDescription.trim()) {
+      setDescriptionError("Please enter a description.");
+      return;
+    }
 
-  const handleSelectImage = (event) => {
-    setUploadingImage(true);
-    const imgUrl = event.target.files[0];
-    formik.setFieldValue("image", imgUrl);
-    setSelectedImage(imgUrl);
-    setUploadingImage(false);
-  };
+    try{
+      await axios.post("http://localhost:8084/api/v1/post/save", {
+        postDescription: postDescription,
+      });
+      alert("Post Created Successfully");
+      setPostId("");
+      setPostDescription("");
+      setDescriptionError("");
+    } catch (err){
+      alert("Post Creation Fail");
+    }
+  }
+  
 
   return (
     <div className="space-y-5">
@@ -63,17 +60,22 @@ const HomeSection = () => {
             style={{ marginLeft: 40, width: 60, height: 60 }}
           />
           <div className="w-full">
-            <form onSubmit={formik.handleSubmit}>
+            <form>
               <div>
                 <input
                   type="text"
-                  name="content"
                   placeholder="What is happening?"
                   className={`border-none outline-none text-xl bg-transparent`}
-                  {...formik.getFieldProps("content")}
+                  value={postDescription}
+                  onChange={(event)=>{
+                    setPostDescription(event.target.value);
+                    setDescriptionError("");
+                  }}
                 />
-                {formik.errors.content && formik.touched.content && (
-                  <span className="text-red-500">{formik.errors.content}</span>
+                {descriptionError && (
+                  <p style={{ color: "red", fontSize: 16 }}>
+                    {descriptionError}
+                  </p>
                 )}
               </div>
               {/*<div>
@@ -87,7 +89,6 @@ const HomeSection = () => {
                       type="file"
                       name="imageFile"
                       className="hidden"
-                      onChange={handleSelectImage}
                     />
                   </label>
                   <label className="flex items-center space-x-2 rounded-md cursor-pointer">
@@ -96,7 +97,6 @@ const HomeSection = () => {
                       type="file"
                       name="imageFile"
                       className="hidden"
-                      onChange={handleSelectImage}
                     />
                   </label>
 
@@ -117,7 +117,8 @@ const HomeSection = () => {
                           }
                       }}
                       variant="contained"
-                      type="submit">
+                      type="submit"
+                      onClick={save}>
                       POST
                     </Button>
                   </div>
