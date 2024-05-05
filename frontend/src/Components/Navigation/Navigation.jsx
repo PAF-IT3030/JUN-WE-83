@@ -3,7 +3,7 @@ import FitLinkIcon from "../../Images/FitLink.png";
 import profileImage from "../../Images/avatar.png";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { navigationMenu } from "./NavigationMenu";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , Link } from "react-router-dom";
 import { Avatar } from "@mui/material";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
@@ -51,6 +51,7 @@ const Navigation = () => {
               </p>
             </div>
           ))}
+          
         </div>
       </div>
 

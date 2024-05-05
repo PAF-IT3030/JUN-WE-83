@@ -215,6 +215,9 @@ function PlanSharingCard() {
           </div>
         </div>
       </div>
+      <section>
+        <ReplyModal open={openReplyModal} handleClose={handleCloseReplyModal}/>
+      </section>
     </div>
   );
 }

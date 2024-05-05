@@ -29,7 +29,7 @@ export const navigationMenu=[
     {
         title:"Meal Plan",
         icon:<RestaurantIcon style={{ color: 'white', width:35, height:35 }}/>,
-        path:"/mealplan"
+        path:"/MealPlan"
     },
     {
         title:"Profile",
