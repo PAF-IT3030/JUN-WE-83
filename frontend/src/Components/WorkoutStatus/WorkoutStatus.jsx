@@ -18,7 +18,7 @@ function WorkoutStatus() {
       <h1
         className="py-5 text-xl font-bold opacity-90"
         style={{ marginLeft: 40, fontSize: 24, color: "#1E0443" }}>
-        Create Eorkout Status
+        Create Workout Status
       </h1>
     </section>
       <div className="formSection">
