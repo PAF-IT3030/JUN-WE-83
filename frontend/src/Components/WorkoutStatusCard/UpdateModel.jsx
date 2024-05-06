@@ -3,6 +3,7 @@ import "./UpdateModel.css";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function UpdateModel() {
   const handleBack = () => navigate(-1);
@@ -37,24 +38,53 @@ function UpdateModel() {
   const updateWorkout = async (e) => {
     e.preventDefault();
 
-    try {
-      const result = await axios.put(`http://localhost:8087/api/v1/workout/edit/${id}`, {
-        workoutName,
-        workoutDate,
-        workoutMatrix,
-        workoutDescription,
-      });
+    // Show confirmation message before updating
+    const confirmResult = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to update the workout details?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Yes, update it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true,
+    });
 
-      if (
-        result.data &&
-        result.data.message === "Workout details updated successfully"
-      ) {
-        alert("Updated Success");
-      } else {
-        console.log("Unexpected API response:", result.data);
+    if (confirmResult.isConfirmed) {
+      try {
+        const result = await axios.put(
+          `http://localhost:8087/api/v1/workout/edit/${id}`,
+          {
+            workoutName: workoutName,
+            workoutDate: workoutDate,
+            workoutMatrix: workoutMatrix,
+            workoutDescription: workoutDescription,
+          }
+        );
+
+        // Check if the update was successful
+        if (result.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: "Workout details updated successfully",
+          });
+        } else {
+          // Handle the case where the update failed
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Failed to update workout details",
+          });
+        }
+      } catch (error) {
+        // Handle any errors that occur during the update process
+        console.error("Error updating workout:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "An error occurred while updating workout details",
+        });
       }
-    } catch (error) {
-      console.error("Error updating workout:", error);
     }
   };
 
@@ -102,7 +132,9 @@ function UpdateModel() {
             value={workoutDescription}
             onChange={(e) => setworkoutDescription(e.target.value)}
           />
-          <button type="button" onClick={updateWorkout}>UPDATE CURRENT STATUS</button>
+          <button type="button" onClick={updateWorkout}>
+            UPDATE CURRENT STATUS
+          </button>
         </form>
       </div>
     </div>
