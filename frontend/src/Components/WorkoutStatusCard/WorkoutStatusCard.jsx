@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./WorkoutStatusCard.css";
 import profileImage from "../../Images/avatar.png";
 import wcard from "../../Images/wcard.png";
@@ -12,9 +12,26 @@ import { useNavigate } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Avatar } from "@mui/material";
 import ReplyModal from "../HomeSection/ReplyModal";
+import axios from "axios";
 
 function WorkoutStatusCard() {
   const navigate = useNavigate();
+  const [workouts, setWorkouts] = useState([]);
+
+  useEffect(() => {
+    async function fetchWorkouts() {
+      try {
+        const response = await axios.get(
+          "http://localhost:8087/api/v1/workout/getAllWorkouts"
+        );
+        setWorkouts(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.log("error workout fetching", error);
+      }
+    }
+    fetchWorkouts();
+  }, []);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -40,8 +57,8 @@ function WorkoutStatusCard() {
     console.log("handle like FitLink");
   };
 
-  return (
-    <div className="flex space-x-5 ">
+  return workouts.map((workout) => (
+    <div key={workout._id} className="flex space-x-5 ">
       <Avatar
         className="cursor-pointer"
         alt="username"
@@ -50,7 +67,7 @@ function WorkoutStatusCard() {
       />
       <div className="w-full">
         <div className="flex items-center justify-between">
-          <div className="flex items-center WorkoutStatusCard cursor-pointer">
+          <div className="flex items-center cursor-pointer WorkoutStatusCard">
             <span className="font-semibold" style={{ fontSize: "18px" }}>
               Sewmi Madhu
             </span>
@@ -92,12 +109,6 @@ function WorkoutStatusCard() {
                 onClick={handleDeleteFitLink}
                 style={{ fontWeight: 300 }}
               >
-                Details
-              </MenuItem>
-              <MenuItem
-                onClick={handleDeleteFitLink}
-                style={{ fontWeight: 300 }}
-              >
                 Delete
               </MenuItem>
               <MenuItem
@@ -112,14 +123,35 @@ function WorkoutStatusCard() {
         <div className="mt-1">
           <div className="cursor-pointer">
             <p className="p-0 mb-2" style={{ fontSize: "18px" }}>
-              My Current Fitness Status is good guys 😎
+              {workout.workoutDescription}
             </p>
-            <div className="flex  border border-gray-400 rounded-md" style={{width:"70%"}}>
+            <div
+              className="flex border border-gray-400 rounded-md"
+              style={{ width: "70%" }}
+            >
               <img className="w-[18rem]  p-5 rounded-md" src={wcard} alt="" />
               <div className="flex flex-col mt-20">
-                <h1 className="workoutname">Push Ups</h1>
-                <h2 style={{fontSize:"20px", fontWeight:600, textAlign:"center"}}>15 reps</h2>
-                <p style={{fontSize:"18px", textAlign:"center", marginTop:"20px", color:"green", fontWeight:600}}>2024.04.17</p>
+                <h1 className="workoutname">{workout.workoutName}</h1>
+                <h2
+                  style={{
+                    fontSize: "20px",
+                    fontWeight: 600,
+                    textAlign: "center",
+                  }}
+                >
+                  {workout.workoutMatrix}
+                </h2>
+                <p
+                  style={{
+                    fontSize: "18px",
+                    textAlign: "center",
+                    marginTop: "20px",
+                    color: "green",
+                    fontWeight: 600,
+                  }}
+                >
+                  {workout.workoutDate}
+                </p>
               </div>
             </div>
           </div>
@@ -157,10 +189,10 @@ function WorkoutStatusCard() {
         </div>
       </div>
       <section>
-        <ReplyModal open={openReplyModal} handleClose={handleCloseReplyModal}/>
+        <ReplyModal open={openReplyModal} handleClose={handleCloseReplyModal} />
       </section>
     </div>
-  );
+  ));
 }
 
 export default WorkoutStatusCard;
