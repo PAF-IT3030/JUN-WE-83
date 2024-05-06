@@ -34,7 +34,7 @@ function UpdateModel() {
     fetchdata();
   }, [id]);
 
-  const updatedata = async (e) => {
+  const updateWorkout = async (e) => {
     e.preventDefault();
 
     try {
@@ -50,7 +50,6 @@ function UpdateModel() {
         result.data.message === "Workout details updated successfully"
       ) {
         alert("Updated Success");
-        navigate("/");
       } else {
         console.log("Unexpected API response:", result.data);
       }
@@ -103,7 +102,7 @@ function UpdateModel() {
             value={workoutDescription}
             onChange={(e) => setworkoutDescription(e.target.value)}
           />
-          <button type="button">UPDATE CURRENT STATUS</button>
+          <button type="button" onClick={updateWorkout}>UPDATE CURRENT STATUS</button>
         </form>
       </div>
     </div>
