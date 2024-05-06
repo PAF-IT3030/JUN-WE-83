@@ -13,6 +13,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Avatar } from "@mui/material";
 import ReplyModal from "../HomeSection/ReplyModal";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function WorkoutStatusCard() {
   const navigate = useNavigate();
@@ -32,6 +33,44 @@ function WorkoutStatusCard() {
     }
     fetchWorkouts();
   }, []);
+
+  async function deleteWorkout(workoutId) {
+    try {
+      // Display a confirmation dialog
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You will not be able to recover this workout!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      });
+
+      // If the user confirms deletion
+      if (result.isConfirmed) {
+        await axios.delete(
+          "http://localhost:8087/api/v1/workout/delete/" + workoutId
+        );
+        setWorkouts((prevWorkouts) =>
+          prevWorkouts.filter((workout) => workout._id !== workoutId)
+        );
+        // Show success message
+        Swal.fire("Deleted!", "Your workout has been deleted.", "success");
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        // If the user cancels
+        Swal.fire("Cancelled", "Your workout is safe :)", "error");
+      }
+    } catch (error) {
+      console.log("error deleting workout", error);
+      // Show error message
+      Swal.fire(
+        "Error",
+        "An error occurred while deleting the workout.",
+        "error"
+      );
+    }
+  }
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -106,8 +145,8 @@ function WorkoutStatusCard() {
               }}
             >
               <MenuItem
-                onClick={handleDeleteFitLink}
                 style={{ fontWeight: 300 }}
+                onClick={() => deleteWorkout(workout._id)}
               >
                 Delete
               </MenuItem>
@@ -139,7 +178,7 @@ function WorkoutStatusCard() {
                     textAlign: "center",
                   }}
                 >
-                  {workout.workoutMatrix}
+                  {workout.workoutMatrix} {workout.workoutName}
                 </h2>
                 <p
                   style={{
