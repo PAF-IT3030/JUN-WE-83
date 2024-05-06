@@ -38,6 +38,26 @@ function UpdateModel() {
   const updateWorkout = async (e) => {
     e.preventDefault();
 
+    // Validate required fields
+    if (!workoutName || !workoutDate || !workoutMatrix || !workoutDescription) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "All fields are required",
+      });
+      return;
+    }
+
+    // Validate workoutMatrix is numeric
+    if (isNaN(workoutMatrix)) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Workout matrix should be a number",
+      });
+      return;
+    }
+
     // Show confirmation message before updating
     const confirmResult = await Swal.fire({
       title: "Are you sure?",
