@@ -4,6 +4,7 @@ import HomePage from './Components/HomePage/HomePage';
 import Authentication from './Components/Authentication/Authentication';
 import { LandingPage } from './Components/LandingPage/LandingPage';
 import RegisterAuthentication from './Components/Authentication/RegisterAuthentication';
+import UpdateModel from './Components/WorkoutStatusCard/UpdateModel';
 
 
 
@@ -16,6 +17,7 @@ function App() {
       <Route path="/landing" element={<LandingPage/>}></Route>
       <Route path="/authentication" element={<Authentication/>}></Route>
       <Route path="/registerauthentication" element={<RegisterAuthentication/>}></Route>
+      <Route path="/updateworkout" element={<UpdateModel/>}></Route>
 
       </Routes>
     </div>
