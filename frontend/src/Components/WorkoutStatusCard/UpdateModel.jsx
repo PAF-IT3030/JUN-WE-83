@@ -1,18 +1,38 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import "./UpdateModel.css";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import axios from "axios";
-import Swal from "sweetalert2";
 import { useParams, useNavigate } from "react-router-dom";
 
 function UpdateModel() {
   const handleBack = () => navigate(-1);
   const navigate = useNavigate();
+
   const { id } = useParams();
   const [workoutName, setworkoutName] = useState("");
   const [workoutDate, setworkoutDate] = useState("");
   const [workoutMatrix, setworkoutMatrix] = useState("");
   const [workoutDescription, setworkoutDescription] = useState("");
+
+  useEffect(() => {
+    async function fetchdata() {
+      try {
+        const result = await axios.get(
+          `http://localhost:8087/api/v1/workout/workout/${id}`
+        );
+        const workoutdata = result.data;
+        setworkoutName(workoutdata.workoutName);
+        setworkoutDate(workoutdata.workoutDate);
+        setworkoutMatrix(workoutdata.workoutMatrix);
+        setworkoutDescription(workoutdata.workoutDescription);
+
+        console.log(workoutdata);
+      } catch (error) {
+        console.log("error fetching", error);
+      }
+    }
+    fetchdata();
+  }, [id]);
 
   return (
     <div className="UpdateModel">
@@ -30,10 +50,34 @@ function UpdateModel() {
       </section>
       <div className="formSection">
         <form className="form-sec">
-          <input type="text" placeholder="Exercise" required />
-          <input type="date" placeholder="Date" required />
-          <input type="text" placeholder="Matrix" required />
-          <textarea type="text" placeholder="Description" required />
+          <input
+            type="text"
+            placeholder="Exercise"
+            required
+            value={workoutName}
+            onChange={(e) => setworkoutName(e.target.value)}
+          />
+          <input
+            type="date"
+            placeholder="Date"
+            required
+            value={workoutDate}
+            onChange={(e) => setworkoutDate(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Matrix"
+            required
+            value={workoutMatrix}
+            onChange={(e) => setworkoutMatrix(e.target.value)}
+          />
+          <textarea
+            type="text"
+            placeholder="Description"
+            required
+            value={workoutDescription}
+            onChange={(e) => setworkoutDescription(e.target.value)}
+          />
           <button type="button">UPDATE CURRENT STATUS</button>
         </form>
       </div>
