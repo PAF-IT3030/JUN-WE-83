@@ -101,7 +101,7 @@ const Profile = () => {
         </div>
         <div>
           <div className="flex items-center mt-8">
-            <h1 className="font-bold text-lg" style={{ fontSize: "24px" }}>
+            <h1 className="text-lg font-bold" style={{ fontSize: "24px" }}>
               Sewmi Madhu
             </h1>
           </div>
@@ -116,7 +116,7 @@ const Profile = () => {
             and inspiring others through their dedication to a healthy and
             active lifestyle.
           </p>
-          <div className="py-1 flex space-x-7">
+          <div className="flex py-1 space-x-7">
             <div className="flex items-center text-gray-500">
               <BusinessCenterIcon
                 style={{ color: "#6C08CB", width: 30, height: 30 }}
@@ -207,7 +207,7 @@ const Profile = () => {
               ))}
             </TabPanel>
             <TabPanel value="2">
-              {[1, 1, 1, 1].map((item) => (
+              {[1].map((item) => (
                 <WorkoutStatusCard />
               ))}
             </TabPanel>
