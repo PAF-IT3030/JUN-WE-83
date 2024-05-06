@@ -23,7 +23,7 @@ const FitLinkCard = () => {
 
   async function Load() {
     const result = await axios.get(
-      "http://localhost:8084/api/v1/post/getposts"
+      "http://localhost:8087/api/v1/post/getposts"
     );
     setPosts(result.data);
     console.log(result.data);
@@ -45,7 +45,7 @@ const FitLinkCard = () => {
   };
 
   async function DeletePost(postid) {
-    await axios.delete("http://localhost:8084/api/v1/post/delete/" + postid);
+    await axios.delete("http://localhost:8087/api/v1/post/delete/" + postid);
     alert("Post Deleted Successfully");
     handleClose();
   }
