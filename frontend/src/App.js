@@ -4,6 +4,7 @@ import HomePage from './Components/HomePage/HomePage';
 import Authentication from './Components/Authentication/Authentication';
 import { LandingPage } from './Components/LandingPage/LandingPage';
 import RegisterAuthentication from './Components/Authentication/RegisterAuthentication';
+import UpdateModel from './Components/WorkoutStatusCard/UpdateModel';
 
 
 
