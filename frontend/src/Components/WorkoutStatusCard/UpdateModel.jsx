@@ -34,6 +34,31 @@ function UpdateModel() {
     fetchdata();
   }, [id]);
 
+  const updatedata = async (e) => {
+    e.preventDefault();
+
+    try {
+      const result = await axios.put(`http://localhost:8087/api/v1/workout/edit/${id}`, {
+        workoutName,
+        workoutDate,
+        workoutMatrix,
+        workoutDescription,
+      });
+
+      if (
+        result.data &&
+        result.data.message === "Workout details updated successfully"
+      ) {
+        alert("Updated Success");
+        navigate("/");
+      } else {
+        console.log("Unexpected API response:", result.data);
+      }
+    } catch (error) {
+      console.error("Error updating workout:", error);
+    }
+  };
+
   return (
     <div className="UpdateModel">
       <section className={`z-50 flex items-center sticky top-0 bg-opacity-95`}>
