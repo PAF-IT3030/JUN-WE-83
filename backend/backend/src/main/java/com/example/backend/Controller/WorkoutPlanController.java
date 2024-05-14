@@ -19,7 +19,10 @@ public class WorkoutPlanController {
         return workoutPlan.getId();
     }
 
-
+    @GetMapping("/getAll")
+    public Iterable<WorkoutPlan> getWorkoutPlans() {
+        return workoutPlanServices.listAll();
+    }
 
 
 
