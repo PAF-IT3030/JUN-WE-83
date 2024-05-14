@@ -67,6 +67,12 @@ function PlanSharing() {
         }
       );
 
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Workout created successfully",
+      });
+
 
       setDate("");
       setExercise("");
