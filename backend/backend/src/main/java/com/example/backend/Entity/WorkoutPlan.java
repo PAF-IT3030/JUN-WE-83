@@ -84,4 +84,16 @@ public class WorkoutPlan {
         this.goals = goals;
     }
 
+    @Override
+    public String toString() {
+        return "WorkoutPlan{" +
+                "id='" + id + '\'' +
+                ", date='" + date + '\'' +
+                ", exercise='" + exercise + '\'' +
+                ", sets='" + sets + '\'' +
+                ", repetitions='" + repetitions + '\'' +
+                ", workoutPlans='" + workoutPlans + '\'' +
+                ", goals='" + goals + '\'' +
+                '}';
+    }
 }
