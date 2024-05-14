@@ -62,10 +62,11 @@ function PlanSharingCard() {
         await axios.delete(
           "http://localhost:8087/api/v1/WorkoutPlan/delete/" + workoutPlanId
         );
-        setWorkoutPlans((prevWorkouts) =>
-          prevWorkouts.filter((workoutPlan) => workoutPlan._id !== workoutPlanId)
+        setWorkoutPlans((prevWorkoutPlans) =>
+          prevWorkoutPlans.filter(
+            (workoutPlan) => workoutPlan.id !== workoutPlanId
+          )
         );
-        
         // Show success message
         Swal.fire("Deleted!", "Your workout has been deleted.", "success");
       } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -73,7 +74,7 @@ function PlanSharingCard() {
         Swal.fire("Cancelled", "Your workout is safe :)", "error");
       }
     } catch (error) {
-      console.log("error deleting workout Plan", error);
+      console.log("error deleting workout", error);
       // Show error message
       Swal.fire(
         "Error",
@@ -83,17 +84,11 @@ function PlanSharingCard() {
     }
   }
 
-
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const handleDeleteFitLink = () => {
-    console.log("Delete FitLink");
-    handleClose();
   };
 
   const handleLikeFitLink = () => {
@@ -111,7 +106,7 @@ function PlanSharingCard() {
 
       <div className="w-full">
         <div className="flex items-center justify-between">
-          <div className="flex items-center WorkoutStatusCard cursor-pointer">
+          <div className="flex items-center cursor-pointer WorkoutStatusCard">
             <span className="font-semibold" style={{ fontSize: "18px" }}>
               Sewmi Madhu
             </span>
@@ -150,17 +145,13 @@ function PlanSharingCard() {
               }}
             >
               <MenuItem
-                onClick={() => deleteWorkoutPlan(workoutPlan._id)}
                 style={{ fontWeight: 300 }}
+                onClick={() => deleteWorkoutPlan(workoutPlan.id)}
               >
                 Delete
               </MenuItem>
-              <MenuItem
-                onClick={handleDeleteFitLink}
-                style={{ fontWeight: 300 }}
-              >
-                Edit
-              </MenuItem>
+
+              <MenuItem style={{ fontWeight: 300 }}>Edit</MenuItem>
             </Menu>
           </div>
         </div>
@@ -171,7 +162,7 @@ function PlanSharingCard() {
               {workoutPlan.workoutPlans}
             </p>
             <div
-              className="flex flex-col  border border-gray-400 rounded-md"
+              className="flex flex-col border border-gray-400 rounded-md"
               style={{ width: "70%" }}
             >
               <p

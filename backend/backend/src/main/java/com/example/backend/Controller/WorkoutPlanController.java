@@ -45,7 +45,7 @@ public class WorkoutPlanController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public void deleteWorkoutPlan(@PathVariable String id) {
         workoutPlanServices.deleteWorkoutPlan(id);
     }
