@@ -25,6 +25,36 @@ function PlanSharing() {
 
     try {
 
+      // Check if any field is empty
+      if (
+        !date ||
+        !exercise ||
+        !sets ||
+        !repetitions ||
+        !workoutPlans ||
+        !goals
+      ) {
+        // Show SweetAlert for required fields
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "All fields are required",
+        });
+
+        return;
+      }
+
+      // Validate sets and repetitions are numbers
+    if (isNaN(sets) || isNaN(repetitions)) {
+      // Show SweetAlert for invalid input
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Sets and Repetitions must be numbers",
+      });
+      return;
+    }
+
       const response = await axios.post(
         "http://localhost:8087/api/v1/WorkoutPlan/save",
         {
@@ -45,9 +75,17 @@ function PlanSharing() {
       setRepetitions("");
       setGoals("");
       navigate("/");
+
+
+
+
     } catch (error) {
       console.log("error creating workout plan", error);
-      
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "An error occurred while creating the workout plan",
+      });
     }
   };
 
