@@ -49,4 +49,11 @@ public class WorkoutPlanController {
     public void deleteWorkoutPlan(@PathVariable String id) {
         workoutPlanServices.deleteWorkoutPlan(id);
     }
+
+    @RequestMapping(value = "/workoutPlan/{id}")
+    private WorkoutPlan getWorkout(@PathVariable(name = "id")String workoutPlanid)
+    {
+        return workoutPlanServices.getWorkoutPlanByID(workoutPlanid);
+    }
+
 }
