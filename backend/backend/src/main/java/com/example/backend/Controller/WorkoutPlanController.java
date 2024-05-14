@@ -24,6 +24,25 @@ public class WorkoutPlanController {
         return workoutPlanServices.listAll();
     }
 
+    @PutMapping("/edit/{id}")
+    public WorkoutPlan updateWorkoutPlan(@PathVariable String id, @RequestBody WorkoutPlan workoutPlan) {
+        WorkoutPlan existingWorkoutPlan = workoutPlanServices.getById(id);
+        if (existingWorkoutPlan != null) {
+            // Update the existing workout plan with the new details
+            existingWorkoutPlan.setDate(workoutPlan.getDate());
+            existingWorkoutPlan.setExercise(workoutPlan.getExercise());
+            existingWorkoutPlan.setSets(workoutPlan.getSets());
+            existingWorkoutPlan.setRepetitions(workoutPlan.getRepetitions());
+            existingWorkoutPlan.setWorkoutPlans(workoutPlan.getWorkoutPlans());
+            existingWorkoutPlan.setGoals(workoutPlan.getGoals());
 
+            // Save the updated workout plan
+            workoutPlanServices.saveOrUpdate(existingWorkoutPlan);
+
+            return existingWorkoutPlan;
+        } else {
+            return null; // or throw an exception indicating workout plan not found
+        }
+    }
 
 }
