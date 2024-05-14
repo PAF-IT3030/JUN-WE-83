@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./PlanSharingCard.css";
 import profileImage from "../../Images/avatar.png";
 import wcard from "../../Images/wcard.png";
@@ -13,9 +13,14 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Avatar } from "@mui/material";
 import ReplyModal from "../HomeSection/ReplyModal";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
+import axios from "axios";
+import Swal from "sweetalert2";
+
 
 function PlanSharingCard() {
+
   const navigate = useNavigate();
+
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -24,6 +29,24 @@ function PlanSharingCard() {
   const [openReplyModal, setOpenReplyModal] = useState(false);
   const handleOpenReplyModel = () => setOpenReplyModal(true);
   const handleCloseReplyModal = () => setOpenReplyModal(false);
+
+  const [workoutPlans, setWorkoutPlans] = useState([]);
+
+  useEffect(() => {
+    async function fetchWorkoutPlan() {
+      try {
+        const response = await axios.get(
+          "http://localhost:8087/api/v1/WorkoutPlan/getAll"
+        );
+        setWorkoutPlans(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.log("error workout plan fetching", error);
+      }
+    }
+    fetchWorkoutPlan();
+
+  }, []);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -41,8 +64,12 @@ function PlanSharingCard() {
     console.log("handle like FitLink");
   };
 
-  return (
-    <div className="flex space-x-5 ">
+
+
+  return workoutPlans.map((workoutPlan) => (
+  
+  
+    <div key ={workoutPlan._id} className="flex space-x-5 ">
       <Avatar
         className="cursor-pointer"
         alt="username"
@@ -110,7 +137,7 @@ function PlanSharingCard() {
         <div className="mt-1">
           <div className="cursor-pointer">
             <p className="p-0 mb-2" style={{ fontSize: "18px" }}>
-              My Fitness Plans are here 🤗
+            {workoutPlan.workoutPlans}
             </p>
             <div
               className="flex flex-col  border border-gray-400 rounded-md"
@@ -129,11 +156,11 @@ function PlanSharingCard() {
                 <div className="flex flex-col">
                   <b>
                     <h1 style={{ fontSize: "24px", marginLeft: "20px" }}>
-                      Push Ups
+                    {workoutPlan.exercise}
                     </h1>
                   </b>
                   <h1 style={{ fontSize: "20px", marginLeft: "20px" }}>
-                    2024.04.18
+                  Date : {workoutPlan.date}
                   </h1>
                 </div>
 
@@ -152,7 +179,7 @@ function PlanSharingCard() {
                     textAlign: "center",
                     marginLeft: "20px",
                   }}>
-                  No Of Sets - 03
+                  Sets : {workoutPlan.sets}
                 </h2>
                 <h2
                   style={{
@@ -161,7 +188,7 @@ function PlanSharingCard() {
                     textAlign: "center",
                     marginLeft: "115px",
                   }}>
-                  No Of Repetitions - 10
+                  Repetitions : {workoutPlan.repetitions}
                 </h2>
               </div>
 
@@ -172,12 +199,8 @@ function PlanSharingCard() {
                   marginRight: "20px",
                   marginBottom: "45px",
                 }}>
-                <p style={{ textAlign: "justify" }}>
-                  Lorem Ipsum has been the industry's standard dummy text ever
-                  since the 1500s, when an unknown printer took a galley of type
-                  and scrambled it to make a type specimen book. It has survived
-                  not only five centuries, but also the leap into electronic
-                  typesetting, remaining essentially unchanged.
+                <p style={{ textAlign: "justify"  }}>
+               <b> Goals : </b> {workoutPlan.goals}
                 </p>
               </div>
             </div>
@@ -219,7 +242,7 @@ function PlanSharingCard() {
         <ReplyModal open={openReplyModal} handleClose={handleCloseReplyModal}/>
       </section>
     </div>
-  );
+  ));
 }
 
 export default PlanSharingCard;
