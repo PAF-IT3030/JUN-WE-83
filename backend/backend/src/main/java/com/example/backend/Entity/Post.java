@@ -1,10 +1,11 @@
 package com.example.backend.Entity;
 
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document (collection = "Posts")
+import java.util.Arrays;
+
+@Document(collection = "Posts")
 public class Post {
 
     @Id
@@ -12,10 +13,12 @@ public class Post {
 
     private String postDescription;
 
+    private String[] images; // Adding the image array attribute
 
-    public Post(String _id, String postDescription) {
+    public Post(String _id, String postDescription, String[] images) { // Updated constructor
         this._id = _id;
         this.postDescription = postDescription;
+        this.images = images;
     }
 
     public Post() {
@@ -37,12 +40,20 @@ public class Post {
         this.postDescription = postDescription;
     }
 
+    public String[] getImages() { // Getter for images
+        return images;
+    }
+
+    public void setImages(String[] images) { // Setter for images
+        this.images = images;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
                 "_id='" + _id + '\'' +
                 ", postDescription='" + postDescription + '\'' +
+                ", images=" + Arrays.toString(images) + // Updated toString method
                 '}';
     }
 }
-
