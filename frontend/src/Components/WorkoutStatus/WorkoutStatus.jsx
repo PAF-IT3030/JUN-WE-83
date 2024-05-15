@@ -69,7 +69,7 @@ function WorkoutStatus() {
       setworkoutDate("");
       setworkoutMatrix("");
       setworkoutDescription("");
-      navigate("/")
+      navigate("/");
     } catch (error) {
       console.log("error creating workout", error);
       Swal.fire({
