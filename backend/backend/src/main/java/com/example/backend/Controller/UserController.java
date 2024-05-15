@@ -1,6 +1,8 @@
 package com.example.backend.Controller;
 
 import com.example.backend.Entity.User;
+import com.example.backend.Service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -8,10 +10,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/user")
 public class UserController {
 
+    @Autowired
+    private UserService userService;
+
     @PostMapping(value = "/save")
     private String saveUser(@RequestBody User users)
     {
-        return users.id;
+        userService.saveorUpdate(users);
+        return users.get_id();
     }
 
 
