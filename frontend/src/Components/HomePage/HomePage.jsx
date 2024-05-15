@@ -11,7 +11,9 @@ import Notification from "../Notifications/Notification";
 import PlanSharing from "../PlanSharing/planSharing";
 import Sharemealplan from "../MealPlan/Sharemealplan";
 import UpdateModel from "../WorkoutStatusCard/UpdateModel";
+import EditPlanSharingCard from "../PlanSharingCard/EditPlanSharingCard";
 import AddPost from "../AddPost/AddPost";
+
 
 const HomePage = () => {
   return (
@@ -41,8 +43,9 @@ const HomePage = () => {
           <Route path="/fitlink/:id" element={<FitLinkDetails />}></Route>
           <Route path="/workoutstatus" element={<WorkoutStatus />}></Route>
           <Route path="/notifications" element={<Notification />}></Route>
-          <Route path="/plansharing" element={<PlanSharing />}></Route>
-          <Route path="/updateworkout/:id" element={<UpdateModel />}></Route>
+          <Route path="/plansharing" element={<PlanSharing />}></Route> 
+          <Route path="/updateworkout/:id" element={<UpdateModel />}></Route> 
+          <Route path="/updateplan/:id" element={<EditPlanSharingCard />}></Route> 
           <Route path="/createpost" element={<AddPost />}></Route>
         </Routes>
       </Grid>

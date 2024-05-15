@@ -135,8 +135,8 @@ const HomeSection = () => {
           <WorkoutStatusCard key={index} />
         ))}
 
-        {[1].map((item) => (
-          <PlanSharingCard />
+        {[1].map((item, index) => (
+          <PlanSharingCard key={index} />
         ))}
       </section>
     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./PlanSharingCard.css";
 import profileImage from "../../Images/avatar.png";
 import wcard from "../../Images/wcard.png";
@@ -8,11 +8,14 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Avatar } from "@mui/material";
 import ReplyModal from "../HomeSection/ReplyModal";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
+import axios from "axios";
+import Swal from "sweetalert2";
+import EditPlanSharing from "./EditPlanSharingCard";
 
 function PlanSharingCard() {
   const navigate = useNavigate();
@@ -25,6 +28,63 @@ function PlanSharingCard() {
   const handleOpenReplyModel = () => setOpenReplyModal(true);
   const handleCloseReplyModal = () => setOpenReplyModal(false);
 
+  const [workoutPlans, setWorkoutPlans] = useState([]);
+
+  useEffect(() => {
+    async function fetchWorkoutPlan() {
+      try {
+        const response = await axios.get(
+          "http://localhost:8087/api/v1/WorkoutPlan/getAll"
+        );
+        setWorkoutPlans(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.log("error workout plan fetching", error);
+      }
+    }
+    fetchWorkoutPlan();
+  }, []);
+
+  async function deleteWorkoutPlan(workoutPlanId) {
+    try {
+      // Display a confirmation dialog
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You will not be able to recover this workout plan!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      });
+
+      // If the user confirms deletion
+      if (result.isConfirmed) {
+        await axios.delete(
+          "http://localhost:8087/api/v1/WorkoutPlan/delete/" + workoutPlanId
+        );
+        setWorkoutPlans((prevWorkoutPlans) =>
+          prevWorkoutPlans.filter(
+            (workoutPlan) => workoutPlan.id !== workoutPlanId
+          )
+        );
+        // Show success message
+        Swal.fire("Deleted!", "Your workout plan has been deleted.", "success");
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        // If the user cancels
+        Swal.fire("Cancelled", "Your workout is safe :)", "error");
+      }
+    } catch (error) {
+      console.log("error deleting workout plan", error);
+      // Show error message
+      Swal.fire(
+        "Error",
+        "An error occurred while deleting the workout plan.",
+        "error"
+      );
+    }
+  }
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -32,17 +92,12 @@ function PlanSharingCard() {
     setAnchorEl(null);
   };
 
-  const handleDeleteFitLink = () => {
-    console.log("Delete FitLink");
-    handleClose();
-  };
-
   const handleLikeFitLink = () => {
     console.log("handle like FitLink");
   };
 
-  return (
-    <div className="flex space-x-5 ">
+  return workoutPlans.map((workoutPlan) => (
+    <div key={workoutPlan._id} className="flex space-x-5 ">
       <Avatar
         className="cursor-pointer"
         alt="username"
@@ -52,7 +107,7 @@ function PlanSharingCard() {
 
       <div className="w-full">
         <div className="flex items-center justify-between">
-          <div className="flex items-center WorkoutStatusCard cursor-pointer">
+          <div className="flex items-center cursor-pointer WorkoutStatusCard">
             <span className="font-semibold" style={{ fontSize: "18px" }}>
               Sewmi Madhu
             </span>
@@ -69,7 +124,8 @@ function PlanSharingCard() {
                 "&:hover": {
                   bgcolor: "#ffffff",
                 },
-              }}>
+              }}
+            >
               <MoreHorizIcon
                 style={{
                   color: "#6C08CB",
@@ -87,22 +143,18 @@ function PlanSharingCard() {
               onClose={handleClose}
               MenuListProps={{
                 "aria-labelledby": "basic-button",
-              }}>
+              }}
+            >
               <MenuItem
-                onClick={handleDeleteFitLink}
-                style={{ fontWeight: 300 }}>
-                Details
-              </MenuItem>
-              <MenuItem
-                onClick={handleDeleteFitLink}
-                style={{ fontWeight: 300 }}>
+                style={{ fontWeight: 300 }}
+                onClick={() => deleteWorkoutPlan(workoutPlan.id)}
+              >
                 Delete
               </MenuItem>
-              <MenuItem
-                onClick={handleDeleteFitLink}
-                style={{ fontWeight: 300 }}>
-                Edit
-              </MenuItem>
+
+              <Link to={`/updateplan/${workoutPlan.id}`}>
+                <MenuItem style={{ fontWeight: 300 }}>Edit</MenuItem>
+              </Link>
             </Menu>
           </div>
         </div>
@@ -110,11 +162,12 @@ function PlanSharingCard() {
         <div className="mt-1">
           <div className="cursor-pointer">
             <p className="p-0 mb-2" style={{ fontSize: "18px" }}>
-              My Fitness Plans are here 🤗
+              {workoutPlan.workoutPlans}
             </p>
             <div
-              className="flex flex-col  border border-gray-400 rounded-md"
-              style={{ width: "70%" }}>
+              className="flex flex-col border border-gray-400 rounded-md"
+              style={{ width: "70%" }}
+            >
               <p
                 style={{
                   marginTop: "4px",
@@ -122,18 +175,19 @@ function PlanSharingCard() {
                   fontSize: "18px",
                   marginLeft: "358px",
                   fontWeight: 600,
-                }}>
+                }}
+              >
                 My Plans
               </p>
               <div className="flex flex-row mt-2">
                 <div className="flex flex-col">
                   <b>
                     <h1 style={{ fontSize: "24px", marginLeft: "20px" }}>
-                      Push Ups
+                      {workoutPlan.exercise}
                     </h1>
                   </b>
                   <h1 style={{ fontSize: "20px", marginLeft: "20px" }}>
-                    2024.04.18
+                    Date : {workoutPlan.date}
                   </h1>
                 </div>
 
@@ -151,8 +205,9 @@ function PlanSharingCard() {
                     fontWeight: 600,
                     textAlign: "center",
                     marginLeft: "20px",
-                  }}>
-                  No Of Sets - 03
+                  }}
+                >
+                  Sets : {workoutPlan.sets}
                 </h2>
                 <h2
                   style={{
@@ -160,8 +215,9 @@ function PlanSharingCard() {
                     fontWeight: 600,
                     textAlign: "center",
                     marginLeft: "115px",
-                  }}>
-                  No Of Repetitions - 10
+                  }}
+                >
+                  Repetitions : {workoutPlan.repetitions}
                 </h2>
               </div>
 
@@ -171,13 +227,10 @@ function PlanSharingCard() {
                   marginLeft: "20px",
                   marginRight: "20px",
                   marginBottom: "45px",
-                }}>
+                }}
+              >
                 <p style={{ textAlign: "justify" }}>
-                  Lorem Ipsum has been the industry's standard dummy text ever
-                  since the 1500s, when an unknown printer took a galley of type
-                  and scrambled it to make a type specimen book. It has survived
-                  not only five centuries, but also the leap into electronic
-                  typesetting, remaining essentially unchanged.
+                  <b> Goals : </b> {workoutPlan.goals}
                 </p>
               </div>
             </div>
@@ -196,7 +249,8 @@ function PlanSharingCard() {
               className={`${
                 true ? "text-pink-600" : "text-gray-600"
               } space-x-1 flex
-              items-center`}>
+              items-center`}
+            >
               {true ? (
                 <FavoriteIcon
                   onClick={handleLikeFitLink}
@@ -216,10 +270,10 @@ function PlanSharingCard() {
         </div>
       </div>
       <section>
-        <ReplyModal open={openReplyModal} handleClose={handleCloseReplyModal}/>
+        <ReplyModal open={openReplyModal} handleClose={handleCloseReplyModal} />
       </section>
     </div>
-  );
+  ));
 }
 
 export default PlanSharingCard;
