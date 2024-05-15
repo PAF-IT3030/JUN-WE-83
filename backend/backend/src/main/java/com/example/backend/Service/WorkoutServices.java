@@ -12,9 +12,7 @@ public class WorkoutServices {
     private WorkoutRepo repo;
 
     public void saveOrUpdate(Workout workouts) {
-
         repo.save(workouts);
-
     }
 
     public Iterable<Workout> listAll() {
