@@ -11,6 +11,7 @@ import Notification from "../Notifications/Notification";
 import PlanSharing from "../PlanSharing/planSharing";
 import Sharemealplan from "../MealPlan/Sharemealplan";
 import UpdateModel from "../WorkoutStatusCard/UpdateModel";
+import EditPlanSharingCard from "../PlanSharingCard/EditPlanSharingCard";
 
 const HomePage = () => {
 
@@ -42,6 +43,7 @@ const HomePage = () => {
           <Route path="/notifications" element={<Notification />}></Route>
           <Route path="/plansharing" element={<PlanSharing />}></Route> 
           <Route path="/updateworkout/:id" element={<UpdateModel />}></Route> 
+          <Route path="/updateplan/:id" element={<EditPlanSharingCard />}></Route> 
 
         </Routes>
       </Grid>

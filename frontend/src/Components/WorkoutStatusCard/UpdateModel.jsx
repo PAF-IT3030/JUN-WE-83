@@ -88,6 +88,7 @@ function UpdateModel() {
             title: "Success",
             text: "Workout details updated successfully",
           });
+          navigate("/");
         } else {
           // Handle the case where the update failed
           Swal.fire({

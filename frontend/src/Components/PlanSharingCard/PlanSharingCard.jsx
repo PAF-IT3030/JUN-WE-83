@@ -8,7 +8,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Avatar } from "@mui/material";
 import ReplyModal from "../HomeSection/ReplyModal";
@@ -152,12 +152,9 @@ function PlanSharingCard() {
                 Delete
               </MenuItem>
 
-              <MenuItem
-                style={{ fontWeight: 300 }}
-                onClick={() => EditPlanSharing(workoutPlan.id)}
-              >
-                Edit
-              </MenuItem>
+              <Link to={`/updateplan/${workoutPlan.id}`}>
+                <MenuItem style={{ fontWeight: 300 }}>Edit</MenuItem>
+              </Link>
             </Menu>
           </div>
         </div>
