@@ -12,16 +12,17 @@ import PlanSharing from "../PlanSharing/planSharing";
 import Sharemealplan from "../MealPlan/Sharemealplan";
 import UpdateModel from "../WorkoutStatusCard/UpdateModel";
 import EditPlanSharingCard from "../PlanSharingCard/EditPlanSharingCard";
+import AddPost from "../AddPost/AddPost";
+
 
 const HomePage = () => {
-
-
   return (
     <Grid
       container
       xs={12}
       className="justify-between px-5 lg:px-20"
-      style={{ backgroundColor: "#1E0443"}}>
+      style={{ backgroundColor: "#1E0443" }}
+    >
       <Grid item xs={0} lg={2.5} className="relative hidden w-full lg:block">
         <Navigation />
       </Grid>
@@ -31,11 +32,12 @@ const HomePage = () => {
         xs={12}
         lg={6}
         className="relative hidden w-full px-5 lg:px-9 lg:block"
-        style={{ backgroundColor: "#ffffff" }}>
+        style={{ backgroundColor: "#ffffff" }}
+      >
         <Routes>
           <Route path="/" element={<HomeSection />}></Route>
 
-          <Route path="/MealPlan" element={<Sharemealplan/>}></Route>
+          <Route path="/MealPlan" element={<Sharemealplan />}></Route>
 
           <Route path="/profile/:id" element={<Profile />}></Route>
           <Route path="/fitlink/:id" element={<FitLinkDetails />}></Route>
@@ -44,7 +46,7 @@ const HomePage = () => {
           <Route path="/plansharing" element={<PlanSharing />}></Route> 
           <Route path="/updateworkout/:id" element={<UpdateModel />}></Route> 
           <Route path="/updateplan/:id" element={<EditPlanSharingCard />}></Route> 
-
+          <Route path="/createpost" element={<AddPost />}></Route>
         </Routes>
       </Grid>
 

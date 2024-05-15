@@ -24,8 +24,8 @@ const HomeSection = () => {
       return;
     }
 
-    try {
-      await axios.post("http://localhost:8084/api/v1/post/save", {
+    try{
+      await axios.post("http://localhost:8087/api/v1/post/save", {
         postDescription: postDescription,
       });
       alert("Post Created Successfully");

@@ -1,7 +1,7 @@
 package com.example.backend.Repo;
 
-import com.example.backend.Entity.Post;
+import com.example.backend.Entity.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface PostRepo extends MongoRepository<Post, String> {
+public interface UserRepo extends MongoRepository<User,String> {
 }
