@@ -15,6 +15,7 @@ import ReplyModal from "../HomeSection/ReplyModal";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import axios from "axios";
 import Swal from "sweetalert2";
+import EditPlanSharing from "./EditPlanSharingCard";
 
 function PlanSharingCard() {
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ function PlanSharingCard() {
       // Display a confirmation dialog
       const result = await Swal.fire({
         title: "Are you sure?",
-        text: "You will not be able to recover this workout!",
+        text: "You will not be able to recover this workout plan!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Yes, delete it!",
@@ -68,17 +69,17 @@ function PlanSharingCard() {
           )
         );
         // Show success message
-        Swal.fire("Deleted!", "Your workout has been deleted.", "success");
+        Swal.fire("Deleted!", "Your workout plan has been deleted.", "success");
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         // If the user cancels
         Swal.fire("Cancelled", "Your workout is safe :)", "error");
       }
     } catch (error) {
-      console.log("error deleting workout", error);
+      console.log("error deleting workout plan", error);
       // Show error message
       Swal.fire(
         "Error",
-        "An error occurred while deleting the workout.",
+        "An error occurred while deleting the workout plan.",
         "error"
       );
     }
@@ -151,7 +152,12 @@ function PlanSharingCard() {
                 Delete
               </MenuItem>
 
-              <MenuItem style={{ fontWeight: 300 }}>Edit</MenuItem>
+              <MenuItem
+                style={{ fontWeight: 300 }}
+                onClick={() => EditPlanSharing(workoutPlan.id)}
+              >
+                Edit
+              </MenuItem>
             </Menu>
           </div>
         </div>
