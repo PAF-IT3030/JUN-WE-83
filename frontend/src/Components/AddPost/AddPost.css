@@ -1,0 +1,98 @@
+.AddPost {
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
+.AddPost .topi h2 {
+  text-align: center;
+  font-size: 35px;
+  font-weight: bold;
+  color: #1e0443;
+  opacity: 90%;
+}
+
+.AddPost .form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.AddPost .in-sec {
+  display: flex;
+  flex-direction: column;
+}
+
+.AddPost .in-sec input {
+  height: 80px;
+  width: 700px;
+  border: 0.2px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.AddPost .file-sec {
+  border: 0.2px solid rgba(0, 0, 0, 0.5);
+  padding: 35px;
+  border-radius: 8px;
+  width: 550px;
+}
+
+.AddPost .upld-btn button {
+  background-color: white;
+  border: 1px solid #34c800;
+  color: #34c800;
+  font-weight: 600;
+  height: 90px;
+  width: 100px;
+  cursor: pointer;
+}
+
+.AddPost .img-upld {
+  display: flex;
+  gap: 50px;
+  align-items: center;
+}
+
+.AddPost .img-view {
+  display: flex;
+  gap: 400px;
+  border: 0.2px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  align-items: center;
+  height: 200px;
+  width: 700px;
+}
+
+.AddPost .img-p img {
+  height: auto;
+  width: 200px;
+  margin-left: 20px;
+}
+
+.AddPost .upd-btnn button {
+  background-color: #334155;
+  color: white;
+  font-weight: 500;
+  height: 90px;
+  width: 700px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.AddPost .dlt-btn button {
+  background-color: white;
+  color: #e50000;
+  font-weight: 500;
+  border: none;
+}
+
+.AddPost .err-msg {
+  color: red;
+}
+
+.AddPost .in-sec input[type="text"]::placeholder {
+  color: black;
+}
