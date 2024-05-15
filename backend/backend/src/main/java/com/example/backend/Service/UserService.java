@@ -18,4 +18,12 @@ public class UserService {
     public Iterable<User> listAll() {
         return this.repo.findAll();
     }
+
+    public void deleteUser(String id) {
+        repo.deleteById(id);
+    }
+
+    public User getUserByID(String userid) {
+        return repo.findById(userid).get();
+    }
 }
