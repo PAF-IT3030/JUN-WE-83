@@ -26,5 +26,16 @@ public class UserController {
         return userService.listAll();
     }
 
+    @PutMapping(value = "/edit/{id}")
+    private User update(@RequestBody User user,@PathVariable(name="id")String _id)
+    {
+        user.set_id(_id);
+        userService.saveorUpdate(user);
+        return user;
+
+    }
+
+    
+
 
 }
