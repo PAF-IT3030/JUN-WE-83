@@ -14,4 +14,8 @@ public class UserService {
     public void saveorUpdate(User users) {
         repo.save(users);
     }
+
+    public Iterable<User> listAll() {
+        return this.repo.findAll();
+    }
 }

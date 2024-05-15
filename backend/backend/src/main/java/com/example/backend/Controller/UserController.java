@@ -20,5 +20,11 @@ public class UserController {
         return users.get_id();
     }
 
+    @GetMapping(value = "/getAll")
+    private Iterable<User>getUsers()
+    {
+        return userService.listAll();
+    }
+
 
 }
