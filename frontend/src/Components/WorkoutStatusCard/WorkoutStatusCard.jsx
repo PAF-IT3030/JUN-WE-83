@@ -18,6 +18,9 @@ import Swal from "sweetalert2";
 function WorkoutStatusCard() {
   const navigate = useNavigate();
   const [workouts, setWorkouts] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [menuId, setMenuId] = useState(null);
+  const [openReplyModal, setOpenReplyModal] = useState(false);
 
   useEffect(() => {
     async function fetchWorkouts() {
@@ -36,7 +39,6 @@ function WorkoutStatusCard() {
 
   async function deleteWorkout(workoutId) {
     try {
-      // Display a confirmation dialog
       const result = await Swal.fire({
         title: "Are you sure?",
         text: "You will not be able to recover this workout!",
@@ -47,7 +49,6 @@ function WorkoutStatusCard() {
         reverseButtons: true,
       });
 
-      // If the user confirms deletion
       if (result.isConfirmed) {
         await axios.delete(
           "http://localhost:8087/api/v1/workout/delete/" + workoutId
@@ -55,15 +56,12 @@ function WorkoutStatusCard() {
         setWorkouts((prevWorkouts) =>
           prevWorkouts.filter((workout) => workout._id !== workoutId)
         );
-        // Show success message
         Swal.fire("Deleted!", "Your workout has been deleted.", "success");
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        // If the user cancels
         Swal.fire("Cancelled", "Your workout is safe :)", "error");
       }
     } catch (error) {
       console.log("error deleting workout", error);
-      // Show error message
       Swal.fire(
         "Error",
         "An error occurred while deleting the workout.",
@@ -72,24 +70,14 @@ function WorkoutStatusCard() {
     }
   }
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const open = Boolean(anchorEl);
-
-  const [openReplyModal, setOpenReplyModal] = useState(false);
-  const handleOpenReplyModel = () => setOpenReplyModal(true);
-  const handleCloseReplyModal = () => setOpenReplyModal(false);
-
-  const handleClick = (event) => {
+  const handleClick = (event, id) => {
     setAnchorEl(event.currentTarget);
+    setMenuId(id);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const handleDeleteFitLink = () => {
-    console.log("Delete FitLink");
-    handleClose();
+    setMenuId(null);
   };
 
   const handleLikeFitLink = () => {
@@ -110,15 +98,14 @@ function WorkoutStatusCard() {
             <span className="font-semibold" style={{ fontSize: "18px" }}>
               Sewmi Madhu
             </span>
-            <span className="text-gray-600">@sewmini . 2m</span>
           </div>
           <div>
             <Button
               id="basic-button"
-              aria-controls={open ? "basic-menu" : undefined}
+              aria-controls={menuId === workout._id ? "basic-menu" : undefined}
               aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleClick}
+              aria-expanded={menuId === workout._id ? "true" : undefined}
+              onClick={(event) => handleClick(event, workout._id)}
               sx={{
                 "&:hover": {
                   bgcolor: "#ffffff",
@@ -138,7 +125,7 @@ function WorkoutStatusCard() {
             <Menu
               id="basic-menu"
               anchorEl={anchorEl}
-              open={open}
+              open={menuId === workout._id}
               onClose={handleClose}
               MenuListProps={{
                 "aria-labelledby": "basic-button",
@@ -195,7 +182,7 @@ function WorkoutStatusCard() {
             <div className="flex items-center space-x-3 text-gray-600">
               <ChatBubbleOutlineIcon
                 className="cursor-pointer"
-                onClick={handleOpenReplyModel}
+                onClick={() => setOpenReplyModal(true)}
                 style={{ height: 30, width: 30 }}
               />
               <p>89</p>
@@ -225,7 +212,10 @@ function WorkoutStatusCard() {
         </div>
       </div>
       <section>
-        <ReplyModal open={openReplyModal} handleClose={handleCloseReplyModal} />
+        <ReplyModal
+          open={openReplyModal}
+          handleClose={() => setOpenReplyModal(false)}
+        />
       </section>
     </div>
   ));

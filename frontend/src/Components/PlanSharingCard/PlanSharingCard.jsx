@@ -19,16 +19,15 @@ import EditPlanSharing from "./EditPlanSharingCard";
 
 function PlanSharingCard() {
   const navigate = useNavigate();
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [workoutPlans, setWorkoutPlans] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [menuId, setMenuId] = useState(null);
+  const [openReplyModal, setOpenReplyModal] = useState(false);
 
   const open = Boolean(anchorEl);
 
-  const [openReplyModal, setOpenReplyModal] = useState(false);
   const handleOpenReplyModel = () => setOpenReplyModal(true);
   const handleCloseReplyModal = () => setOpenReplyModal(false);
-
-  const [workoutPlans, setWorkoutPlans] = useState([]);
 
   useEffect(() => {
     async function fetchWorkoutPlan() {
@@ -85,11 +84,14 @@ function PlanSharingCard() {
     }
   }
 
-  const handleClick = (event) => {
+  const handleClick = (event, id) => {
     setAnchorEl(event.currentTarget);
+    setMenuId(id);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
+    setMenuId(null);
   };
 
   const handleLikeFitLink = () => {
@@ -116,10 +118,12 @@ function PlanSharingCard() {
           <div>
             <Button
               id="basic-button"
-              aria-controls={open ? "basic-menu" : undefined}
+              aria-controls={
+                menuId === workoutPlan.id ? "basic-menu" : undefined
+              }
               aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleClick}
+              aria-expanded={menuId === workoutPlan.id ? "true" : undefined}
+              onClick={(event) => handleClick(event, workoutPlan.id)}
               sx={{
                 "&:hover": {
                   bgcolor: "#ffffff",
@@ -139,7 +143,7 @@ function PlanSharingCard() {
             <Menu
               id="basic-menu"
               anchorEl={anchorEl}
-              open={open}
+              open={menuId === workoutPlan.id}
               onClose={handleClose}
               MenuListProps={{
                 "aria-labelledby": "basic-button",
