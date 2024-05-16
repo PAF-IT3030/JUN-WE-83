@@ -24,7 +24,7 @@ function AddPost() {
   const [loading, setLoading] = useState(false);
 
   const handleImageSubmit = (e) => {
-    if (files.length > 0 && files.length + formData.images.length < 2) {
+    if (files.length > 0 && files.length + formData.images.length < 4) {
       setUploading(true);
       setImageUploadError(false);
       const promises = [];
