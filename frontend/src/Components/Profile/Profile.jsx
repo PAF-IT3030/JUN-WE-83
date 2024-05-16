@@ -213,7 +213,7 @@ const Profile = () => {
             </TabPanel>
 
              <TabPanel value="3">
-              {[1, 1, 1, 1].map((item) => (
+              {[1].map((item) => (
                 <PlanSharingCard />
               ))}
             </TabPanel>

@@ -24,12 +24,11 @@ const style = {
   borderRadius: 4,
 };
 
-export default function ReplyModal({handleClose,open}) {
+export default function ReplyModal({ handleClose, open }) {
   const navigate = useNavigate();
 
   const [uploadingImage, setUploadingImage] = React.useState(false);
   const [selectImage, setSelectedImage] = React.useState("");
-
 
   const handleSubmit = (values) => {
     // Store the reply in local storage
@@ -45,7 +44,6 @@ export default function ReplyModal({handleClose,open}) {
     // Close the modal
     handleClose();
   };
-
 
   const formik = useFormik({
     initialValues: {
@@ -70,7 +68,8 @@ export default function ReplyModal({handleClose,open}) {
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description">
+        aria-describedby="modal-modal-description"
+      >
         <Box sx={style}>
           <div className="flex space-x-5">
             <Avatar
@@ -82,8 +81,8 @@ export default function ReplyModal({handleClose,open}) {
             />
 
             <div className="w-full">
-              <div className="flex justify-between items-center">
-                <div className="flex cursor-pointer items-center space-x-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2 cursor-pointer">
                   <span className="font-semibold" style={{ fontSize: "18px" }}>
                     Sewmi Madhu
                   </span>
@@ -94,99 +93,96 @@ export default function ReplyModal({handleClose,open}) {
               <div className="mt-1">
                 <div
                   onClick={() => navigate(`/fitlink/${3}`)}
-                  className="cursor-pointer">
-                  <p className="mb-2 p-0" style={{ fontSize: "18px" }}>
-                    Quick Fitness Tips 👍
-                  </p>
-                </div>
+                  className="cursor-pointer"
+                ></div>
               </div>
             </div>
-            
           </div>
           <section className={`py-10`}>
-              <div className="flex space-x-5">
-                <Avatar
-                  alt="username"
-                  src={profileImage}
-                  style={{ marginLeft: 40, width: 60, height: 60 }}
-                />
-                <div className="w-full">
-                  <form onSubmit={formik.handleSubmit}>
-                    <div>
-                      <input
-                        type="text"
-                        name="content"
-                        placeholder="What is happening?"
-                        className={`border-none outline-none text-xl bg-transparent`}
-                        {...formik.getFieldProps("content")}
-                      />
-                      {formik.errors.content && formik.touched.content && (
-                        <span className="text-red-500">
-                          {formik.errors.content}
-                        </span>
-                      )}
-                    </div>
-                    <div>
-                      <img src="" alt="" />
-                    </div>
-                    <div className="flex justify-between items-center mt-5">
-                      <div className="flex space-x-5 items-center">
-                        <label className="flex items-center space-x-2 rounded-md cursor-pointer">
-                          <ImageIcon
-                            style={{ color: "#6C08CB", width: 30, height: 30 }}
-                          />
-                          <input
-                            type="file"
-                            name="imageFile"
-                            className="hidden"
-                            onChange={handleSelectImage}
-                          />
-                        </label>
-                        <label className="flex items-center space-x-2 rounded-md cursor-pointer">
-                          <SlideshowIcon
-                            style={{ color: "#6C08CB", width: 30, height: 30 }}
-                          />
-                          <input
-                            type="file"
-                            name="imageFile"
-                            className="hidden"
-                            onChange={handleSelectImage}
-                          />
-                        </label>
+            <div className="flex space-x-5">
+              <Avatar
+                alt="username"
+                src={profileImage}
+                style={{ marginLeft: 40, width: 60, height: 60 }}
+              />
+              <div className="w-full">
+                <form onSubmit={formik.handleSubmit}>
+                  <div>
+                    <input
+                      type="text"
+                      name="content"
+                      placeholder="What is happening?"
+                      className={`border-none outline-none text-xl bg-transparent`}
+                      {...formik.getFieldProps("content")}
+                    />
+                    {formik.errors.content && formik.touched.content && (
+                      <span className="text-red-500">
+                        {formik.errors.content}
+                      </span>
+                    )}
+                  </div>
+                  <div>
+                    <img src="" alt="" />
+                  </div>
+                  <div className="flex items-center justify-between mt-5">
+                    <div className="flex items-center space-x-5">
+                      <label className="flex items-center space-x-2 rounded-md cursor-pointer">
+                        <ImageIcon
+                          style={{ color: "#6C08CB", width: 30, height: 30 }}
+                        />
+                        <input
+                          type="file"
+                          name="imageFile"
+                          className="hidden"
+                          onChange={handleSelectImage}
+                        />
+                      </label>
+                      <label className="flex items-center space-x-2 rounded-md cursor-pointer">
+                        <SlideshowIcon
+                          style={{ color: "#6C08CB", width: 30, height: 30 }}
+                        />
+                        <input
+                          type="file"
+                          name="imageFile"
+                          className="hidden"
+                          onChange={handleSelectImage}
+                        />
+                      </label>
 
-                        <FmdGoodIcon
-                          className="flex items-center space-x-2 rounded-md cursor-pointer"
-                          style={{ color: "#6C08CB", width: 30, height: 30 }}
-                        />
-                        <TagFacesIcon
-                          className="flex items-center space-x-2 rounded-md cursor-pointer"
-                          style={{ color: "#6C08CB", width: 30, height: 30 }}
-                        />
-                        <div>
-                          <Button
-                            sx={{
-                              borderRadius: "20px",
-                              paddingY: "8px",
-                              bgcolor: "#1E0443",
-                              marginLeft: "85px",
-                              width: "100px",
-                              color: "#fffffff",
-                              fontSize: "16px",
-                              "&:hover": {
-                                bgcolor: "#2D0754",
-                              },
-                            }}
-                            variant="contained"
-                            type="submit">
-                            POST
-                          </Button>
-                        </div>
+                      <FmdGoodIcon
+                        className="flex items-center space-x-2 rounded-md cursor-pointer"
+                        style={{ color: "#6C08CB", width: 30, height: 30 }}
+                      />
+                      <TagFacesIcon
+                        className="flex items-center space-x-2 rounded-md cursor-pointer"
+                        style={{ color: "#6C08CB", width: 30, height: 30 }}
+                      />
+                      <div>
+                        <Button
+                          sx={{
+                            borderRadius: "20px",
+                            paddingY: "8px",
+                            bgcolor: "#1E0443",
+                            marginLeft: "85px",
+                            width: "100px",
+                            color: "#fffffff",
+                            fontSize: "16px",
+                            "&:hover": {
+                              bgcolor: "#2D0754",
+                            },
+                          }}
+                          variant="contained"
+                          type="submit"
+                        >
+                          POST
+                        </Button>
                       </div>
                     </div>
-                  </form>
-                </div>
+                  </div>
+                </form>
               </div>
-            </section>
+            </div>
+          </section>
         </Box>
       </Modal>
     </div>

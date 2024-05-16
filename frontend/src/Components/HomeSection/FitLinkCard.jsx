@@ -12,10 +12,14 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import PostImage from "../../Images/fitness-tips-1645774618.jpg";
 import ReplyModal from "./ReplyModal";
+import Swal from "sweetalert2";
 
 const FitLinkCard = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [menuId, setMenuId] = useState(null);
+  const [openReplyModal, setOpenReplyModal] = useState(false);
 
   useEffect(() => {
     (async () => await Load())();
@@ -29,25 +33,51 @@ const FitLinkCard = () => {
     console.log(result.data);
   }
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
   const open = Boolean(anchorEl);
-
-  const [openReplyModal, setOpenReplyModal] = useState(false);
   const handleOpenReplyModel = () => setOpenReplyModal(true);
   const handleCloseReplyModal = () => setOpenReplyModal(false);
 
-  const handleClick = (event) => {
+  const handleClick = (event, id) => {
     setAnchorEl(event.currentTarget);
+    setMenuId(id);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
+    setMenuId(null);
   };
 
   async function DeletePost(postid) {
-    await axios.delete("http://localhost:8087/api/v1/post/delete/" + postid);
-    alert("Post Deleted Successfully");
-    handleClose();
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You will not be able to recover this post!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      });
+
+      if (result.isConfirmed) {
+        await axios.delete(
+          `http://localhost:8087/api/v1/post/delete/${postid}`
+        );
+        setPosts((prevPosts) => {
+          const newPosts = prevPosts.filter((post) => post._id !== postid);
+          console.log("Updated posts after deletion:", newPosts);
+          return newPosts;
+        });
+        Swal.fire("Deleted!", "Your post has been deleted.", "success");
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire("Cancelled", "Your post is safe :)", "error");
+      }
+
+      handleClose();
+    } catch (error) {
+      console.error("Error deleting post:", error);
+      Swal.fire("Error", "An error occurred while deleting the post.", "error");
+    }
   }
 
   const handleLikeFitLink = () => {
@@ -56,119 +86,121 @@ const FitLinkCard = () => {
 
   return (
     <React.Fragment>
-      {/*<div className='flex items-center font-semibold text-gray-700 py-2'>
+      {posts.map((post) => (
+        <div key={post._id} className="flex space-x-5">
+          <Avatar
+            onClick={() => navigate(`/profile/${6}`)}
+            className="cursor-pointer"
+            alt="username"
+            src={profileImage}
+            style={{ marginLeft: 40, width: 60, height: 60 }}
+          />
 
+          <div className="w-full">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2 cursor-pointer">
+                <span className="font-semibold" style={{ fontSize: "18px" }}>
+                  Sewmi Madhu
+                </span>
+                <span className="text-gray-600">@sewmini . 2m</span>
+              </div>
+              <div>
+                <Button
+                  id="basic-button"
+                  aria-controls={menuId === post._id ? "basic-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={menuId === post._id ? "true" : undefined}
+                  onClick={(event) => handleClick(event, post._id)}
+                  sx={{
+                    "&:hover": {
+                      bgcolor: "#ffffff",
+                    },
+                  }}
+                >
+                  <MoreHorizIcon
+                    style={{
+                      color: "#6C08CB",
+                      width: 35,
+                      height: 35,
+                      marginRight: 70,
+                    }}
+                  />
+                </Button>
 
-        </div>*/}
-      {posts.map(function fn(post) {
-        return (
-          <div className="flex space-x-5">
-            <Avatar
-              onClick={() => navigate(`/profile/${6}`)}
-              className="cursor-pointer"
-              alt="username"
-              src={profileImage}
-              style={{ marginLeft: 40, width: 60, height: 60 }}
-            />
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={menuId === post._id}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                >
+                  <MenuItem style={{ fontWeight: 300 }}>Details</MenuItem>
+                  <MenuItem
+                    onClick={() => DeletePost(post._id)}
+                    style={{ fontWeight: 300 }}
+                  >
+                    Delete
+                  </MenuItem>
+                  <MenuItem style={{ fontWeight: 300 }}>Edit</MenuItem>
+                </Menu>
+              </div>
+            </div>
 
-            <div className="w-full">
-              <div className="flex justify-between items-center">
-                <div className="flex cursor-pointer items-center space-x-2">
-                  <span className="font-semibold" style={{ fontSize: "18px" }}>
-                    Sewmi Madhu
-                  </span>
-                  <span className="text-gray-600">@sewmini . 2m</span>
-                </div>
+            <div className="mt-1">
+              <div>
+                <p className="p-0 mb-2" style={{ fontSize: "18px" }}>
+                  {post.postDescription}
+                </p>
                 <div>
-                  <Button
-                    id="basic-button"
-                    aria-controls={open ? "basic-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? "true" : undefined}
-                    onClick={handleClick}
-                    sx={{
-                      "&:hover": {
-                        bgcolor: "#ffffff",
-                      },
-                    }}>
-                    <MoreHorizIcon
-                      style={{
-                        color: "#6C08CB",
-                        width: 35,
-                        height: 35,
-                        marginRight: 70,
-                      }}
+                  {post.images.map((image, index) => (
+                    <img
+                      key={index}
+                      className="w-[28rem] border border-gray-400 p-5 rounded-md my-5"
+                      src={image}
+                      alt={`Image ${index + 1}`}
                     />
-                  </Button>
-
-                  <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                      "aria-labelledby": "basic-button",
-                    }}>
-                    <MenuItem style={{ fontWeight: 300 }}>Details</MenuItem>
-                    <MenuItem
-                      onClick={() => DeletePost(post._id)}
-                      style={{ fontWeight: 300 }}>
-                      Delete
-                    </MenuItem>
-                    <MenuItem style={{ fontWeight: 300 }}>Edit</MenuItem>
-                  </Menu>
+                  ))}
                 </div>
               </div>
 
-              <div className="mt-1">
-                <div
-                  onClick={() => navigate(`/fitlink/${3}`)}
-                  className="cursor-pointer">
-                  <p className="mb-2 p-0" style={{ fontSize: "18px" }}>
-                    {post.postDescription}
-                  </p>
-                  <img
-                    className="w-[28rem] border border-gray-400 p-5 rounded-md"
-                    src={PostImage}
-                    alt=""
+              <div className="flex flex-wrap items-center justify-between py-5">
+                <div className="flex items-center space-x-3 text-gray-600">
+                  <ChatBubbleOutlineIcon
+                    className="cursor-pointer"
+                    onClick={handleOpenReplyModel}
+                    style={{ height: 30, width: 30 }}
                   />
+                  <p>43</p>
                 </div>
-
-                <div className="py-5 flex flex-wrap justify-between items-center">
-                  <div className="space-x-3 flex items-center text-gray-600">
-                    <ChatBubbleOutlineIcon
+                <div
+                  className={`${
+                    true ? "text-pink-600" : "text-gray-600"
+                  } space-x-1 flex
+              items-center`}
+                >
+                  {true ? (
+                    <FavoriteIcon
+                      onClick={handleLikeFitLink}
                       className="cursor-pointer"
-                      onClick={handleOpenReplyModel}
                       style={{ height: 30, width: 30 }}
                     />
-                    <p>43</p>
-                  </div>
-                  <div
-                    className={`${
-                      true ? "text-pink-600" : "text-gray-600"
-                    } space-x-1 flex
-              items-center`}>
-                    {true ? (
-                      <FavoriteIcon
-                        onClick={handleLikeFitLink}
-                        className="cursor-pointer"
-                        style={{ height: 30, width: 30 }}
-                      />
-                    ) : (
-                      <FavoriteBorderIcon
-                        onClick={handleLikeFitLink}
-                        className="cursor-pointer"
-                        style={{ height: 30, width: 30 }}
-                      />
-                    )}
-                    <p style={{ marginRight: 400 }}>54</p>
-                  </div>
+                  ) : (
+                    <FavoriteBorderIcon
+                      onClick={handleLikeFitLink}
+                      className="cursor-pointer"
+                      style={{ height: 30, width: 30 }}
+                    />
+                  )}
+                  <p style={{ marginRight: 400 }}>54</p>
                 </div>
               </div>
             </div>
           </div>
-        );
-      })}
+        </div>
+      ))}
+
       <section>
         <ReplyModal open={openReplyModal} handleClose={handleCloseReplyModal} />
       </section>
