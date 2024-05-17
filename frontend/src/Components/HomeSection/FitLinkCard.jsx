@@ -2,7 +2,7 @@ import axios from "axios";
 import { Avatar } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import profileImage from "../../Images/avatar.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -143,7 +143,10 @@ const FitLinkCard = () => {
                   >
                     Delete
                   </MenuItem>
-                  <MenuItem style={{ fontWeight: 300 }}>Edit</MenuItem>
+
+                  <Link to={`/updatepost/${post._id}`}>
+                    <MenuItem style={{ fontWeight: 300 }}>Edit</MenuItem>
+                  </Link>
                 </Menu>
               </div>
             </div>

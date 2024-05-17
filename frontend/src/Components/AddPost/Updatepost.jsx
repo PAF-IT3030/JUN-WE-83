@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./AddPost.css";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import {
@@ -11,7 +10,8 @@ import {
 } from "firebase/storage";
 import { app } from "../../firebase";
 
-function AddPost() {
+function Updatepost() {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
@@ -84,6 +84,27 @@ function AddPost() {
     });
   };
 
+  useEffect(() => {
+    async function fetchdata() {
+      try {
+        const result = await axios.get(
+          `http://localhost:8087/api/v1/post/getpost/${id}`
+        );
+        const postData = result.data;
+
+        setFormData({
+          postDescription: postData.postDescription || "",
+          images: postData.images || [],
+        });
+
+        console.log(postData);
+      } catch (error) {
+        console.log("error fetching", error);
+      }
+    }
+    fetchdata();
+  }, [id]);
+
   const handleChange = (e) => {
     {
       setFormData({
@@ -93,48 +114,69 @@ function AddPost() {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const updatePost = async (e) => {
     e.preventDefault();
 
-    // Check if any field is empty
-    if (!formData.postDescription || formData.images.length === 0) {
+    // Validate form data
+    if (!formData.postDescription.trim() || formData.images.length === 0) {
       Swal.fire({
         icon: "error",
-        title: "Oops...",
-        text: "Please fill out all fields!",
+        title: "Validation Error",
+        text: "Please fill all required fields and upload at least one image.",
       });
       return;
     }
 
-    try {
-      if (formData.images.length < 1)
-        return setError("You must upload at least one image");
-      setLoading(true);
-      setError(false);
-      const response = await axios.post(
-        "http://localhost:8087/api/v1/post/save",
-        {
-          ...formData,
+    // Show confirmation message before updating
+    const confirmResult = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to update the post details?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Yes, update it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true,
+    });
+
+    if (confirmResult.isConfirmed) {
+      try {
+        const result = await axios.put(
+          `http://localhost:8087/api/v1/post/edit/${id}`,
+          formData
+        );
+
+        // Check if the update was successful
+        if (result.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: "post details updated successfully",
+          });
+          navigate("/");
+        } else {
+          // Handle the case where the update failed
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Failed to update post details",
+          });
         }
-      );
-      const data = response.data;
-      setLoading(false);
-      if (data.success === false) {
-        setError(data.message);
+      } catch (error) {
+        // Handle any errors that occur during the update process
+        console.error("Error updating workout:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "An error occurred while updating post details",
+        });
       }
-      Swal.fire("Success!", "Your item has been added.", "success").then(() => {
-        navigate("/");
-      });
-    } catch (error) {
-      setError(error.message);
-      setLoading(false);
     }
   };
 
   return (
     <div className="AddPost">
       <div className="topi">
-        <h2>Create Post</h2>
+        <h2>Update Post</h2>
       </div>
       <form>
         <div className="form-section">
@@ -187,7 +229,7 @@ function AddPost() {
           ))}
 
           <div className="upd-btnn">
-            <button onClick={handleSubmit}>Share Post</button>
+            <button onClick={updatePost}>Update Post</button>
           </div>
           {error && <p className="err-msg">{error}</p>}
         </div>
@@ -196,4 +238,4 @@ function AddPost() {
   );
 }
 
-export default AddPost;
+export default Updatepost;

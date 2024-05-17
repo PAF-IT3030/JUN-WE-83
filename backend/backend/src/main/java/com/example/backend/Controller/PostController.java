@@ -1,6 +1,7 @@
 package com.example.backend.Controller;
 
 import com.example.backend.Entity.Post;
+import com.example.backend.Entity.Workout;
 import com.example.backend.Service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,14 @@ public class PostController {
     @GetMapping(value = "/getposts")
     public Iterable<Post> getPosts() {
         return postService.listAllPosts();
+    }
+
+    @PutMapping(value = "/edit/{id}")
+    private Post update(@RequestBody Post post, @PathVariable(name = "id")String _id)
+    {
+        post.set_id(_id);
+        postService.saveOrUpdate(post);
+        return post;
     }
 
     @GetMapping("/getpost/{id}")
