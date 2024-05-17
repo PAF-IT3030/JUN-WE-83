@@ -13,6 +13,7 @@ import Sharemealplan from "../MealPlan/Sharemealplan";
 import UpdateModel from "../WorkoutStatusCard/UpdateModel";
 import EditPlanSharingCard from "../PlanSharingCard/EditPlanSharingCard";
 import AddPost from "../AddPost/AddPost";
+import Updatepost from "../AddPost/Updatepost";
 
 
 const HomePage = () => {
@@ -36,9 +37,7 @@ const HomePage = () => {
       >
         <Routes>
           <Route path="/" element={<HomeSection />}></Route>
-
           <Route path="/MealPlan" element={<Sharemealplan />}></Route>
-
           <Route path="/profile/:id" element={<Profile />}></Route>
           <Route path="/fitlink/:id" element={<FitLinkDetails />}></Route>
           <Route path="/workoutstatus" element={<WorkoutStatus />}></Route>
@@ -47,6 +46,7 @@ const HomePage = () => {
           <Route path="/updateworkout/:id" element={<UpdateModel />}></Route> 
           <Route path="/updateplan/:id" element={<EditPlanSharingCard />}></Route> 
           <Route path="/createpost" element={<AddPost />}></Route>
+          <Route path="/updatepost/:id" element={<Updatepost />}></Route>
         </Routes>
       </Grid>
 
