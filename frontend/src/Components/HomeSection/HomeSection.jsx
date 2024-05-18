@@ -28,12 +28,10 @@ const HomeSection = () => {
         {[1].map((item, index) => (
           <PlanSharingCard key={index} />
         ))}
-
-        <Mealplancard/>
         
-        {/* {[1].map((item, index) => (
+        {[1].map((item, index) => (
           <Mealplancard key={index} />
-        ))} */}
+        ))}
       </section>
     </div>
   );
