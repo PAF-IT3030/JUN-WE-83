@@ -138,9 +138,18 @@ function AddPost() {
 
   return (
     <div className="AddPost">
-      <div className="topi">
-        <h2>Create Post</h2>
-      </div>
+      <section className={`z-50 flex items-center sticky top-0 bg-opacity-95`}>
+        <KeyboardBackspaceIcon
+          className="cursor-pointer"
+          onClick={handleBack}
+        />
+        <h1
+          className="py-5 text-xl font-bold opacity-90"
+          style={{ marginLeft: 40, fontSize: 24, color: "#1E0443" }}
+        >
+          Create New Post
+        </h1>
+      </section>
       <form>
         <div className="form-section">
           <div className="in-sec">
