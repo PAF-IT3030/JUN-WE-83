@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import "./AddPost.css";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -13,6 +14,7 @@ import { app } from "../../firebase";
 
 //Add the post function
 function AddPost() {
+  const handleBack = () => navigate(-1);
   const navigate = useNavigate();
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
