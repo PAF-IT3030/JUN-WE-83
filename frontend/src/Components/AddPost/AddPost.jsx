@@ -22,11 +22,13 @@ function AddPost() {
     images: [],
   });
 
+  
   //create the variables
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+
 
   const handleImageSubmit = (e) => {
     if (files.length > 0 && files.length + formData.images.length < 4) {
@@ -200,6 +202,9 @@ function AddPost() {
             </div>
           ))}
 
+<div>
+          
+        </div>
           <div className="upd-btnn">
             <button onClick={handleSubmit}>Share Post</button>
           </div>
