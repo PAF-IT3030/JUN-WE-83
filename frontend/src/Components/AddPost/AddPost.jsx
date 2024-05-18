@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import "./AddPost.css";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -11,17 +12,23 @@ import {
 } from "firebase/storage";
 import { app } from "../../firebase";
 
+//Add the post function
 function AddPost() {
+  const handleBack = () => navigate(-1);
   const navigate = useNavigate();
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
     postDescription: "",
     images: [],
   });
+
+  
+  //create the variables
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+
 
   const handleImageSubmit = (e) => {
     if (files.length > 0 && files.length + formData.images.length < 4) {
@@ -133,9 +140,18 @@ function AddPost() {
 
   return (
     <div className="AddPost">
-      <div className="topi">
-        <h2>Create Post</h2>
-      </div>
+      <section className={`z-50 flex items-center sticky top-0 bg-opacity-95`}>
+        <KeyboardBackspaceIcon
+          className="cursor-pointer"
+          onClick={handleBack}
+        />
+        <h1
+          className="py-5 text-xl font-bold opacity-90"
+          style={{ marginLeft: 40, fontSize: 24, color: "#1E0443" }}
+        >
+          Create New Post
+        </h1>
+      </section>
       <form>
         <div className="form-section">
           <div className="in-sec">
@@ -186,6 +202,9 @@ function AddPost() {
             </div>
           ))}
 
+<div>
+          
+        </div>
           <div className="upd-btnn">
             <button onClick={handleSubmit}>Share Post</button>
           </div>

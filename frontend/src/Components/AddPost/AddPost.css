@@ -71,10 +71,11 @@
 }
 
 .AddPost .upd-btnn button {
-  background-color: #334155;
+  background-color: #1e0443;
+  opacity: 67%;
+  height: 60px;
   color: white;
   font-weight: 500;
-  height: 90px;
   width: 700px;
   border: none;
   border-radius: 5px;
