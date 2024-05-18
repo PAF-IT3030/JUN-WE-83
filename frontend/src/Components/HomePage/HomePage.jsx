@@ -14,6 +14,7 @@ import UpdateModel from "../WorkoutStatusCard/UpdateModel";
 import EditPlanSharingCard from "../PlanSharingCard/EditPlanSharingCard";
 import AddPost from "../AddPost/AddPost";
 import Updatepost from "../AddPost/Updatepost";
+import UpdateMealPlan from "../MealPlan/UpdateMealPlan";
 
 
 const HomePage = () => {
@@ -47,6 +48,7 @@ const HomePage = () => {
           <Route path="/updateplan/:id" element={<EditPlanSharingCard />}></Route> 
           <Route path="/createpost" element={<AddPost />}></Route>
           <Route path="/updatepost/:id" element={<Updatepost />}></Route>
+          <Route path="/updatemealplan/:id" element={<UpdateMealPlan />}></Route>
         </Routes>
       </Grid>
 

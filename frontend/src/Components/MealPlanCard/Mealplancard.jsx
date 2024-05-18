@@ -136,8 +136,10 @@ function Mealplancard() {
               >
                 Delete
               </MenuItem>
-
+              <Link to={`/updatemealplan/${mealPlan._id}`}>
               <MenuItem style={{ fontWeight: 300 }}>Edit</MenuItem>
+              </Link>
+              
             </Menu>
           </div>
         </div>
