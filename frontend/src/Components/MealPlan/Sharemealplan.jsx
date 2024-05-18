@@ -1,104 +1,227 @@
-import React, { useState } from 'react';
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Form from 'react-bootstrap/Form';
-import { Button } from 'react-bootstrap';
-import './mealplan.css';
+import axios from "axios";
+import Swal from "sweetalert2";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
+import { app } from "../../firebase";
 
-const Sharemealplan = () => {
-  const [formData, setFormData] = useState({
-    ingredients: '',
-    instructions: '',
-    description: '',
-    image: null,
-  });
-  
-  const [errors, setErrors] = useState({});
+function Sharemealplan() {
   const navigate = useNavigate();
+  const [files, setFiles] = useState([]);
+  const [formData, setFormData] = useState({
+    ingredients: "",
+    cookingInstructions: "",
+    description: "",
+    images: [],
+  });
+  const [imageUploadError, setImageUploadError] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleBack = () => navigate(-1);
+  const handleImageSubmit = (e) => {
+    if (files.length > 0 && files.length + formData.images.length < 2) {
+      setUploading(true);
+      setImageUploadError(false);
+      const promises = [];
+
+      for (let i = 0; i < files.length; i++) {
+        promises.push(storeImage(files[i]));
+      }
+      Promise.all(promises)
+        .then((urls) => {
+          setFormData({
+            ...formData,
+            images: formData.images.concat(urls),
+          });
+          setImageUploadError(false);
+          setUploading(false);
+        })
+        .catch((err) => {
+          setImageUploadError("Image upload failed (2 mb max per image)");
+          setUploading(false);
+        });
+    } else {
+      setImageUploadError("You can only upload 1 image");
+      setUploading(false);
+    }
+  };
+
+  const storeImage = async (file) => {
+    return new Promise((resolve, reject) => {
+      const storage = getStorage(app);
+      const fileName = new Date().getTime() + file.name;
+      const storageRef = ref(storage, fileName);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(`Upload is ${progress}% done`);
+        },
+        (error) => {
+          reject(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            resolve(downloadURL);
+          });
+        }
+      );
+    });
+  };
+
+  const handleRemoveImage = (index, e) => {
+    e.preventDefault();
+    setFormData({
+      ...formData,
+      images: formData.images.filter((_, i) => i !== index),
+    });
+  };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: '' }));
+    {
+      setFormData({
+        ...formData,
+        [e.target.id]: e.target.value,
+      });
+    }
   };
 
-  const handleImageUpload = (e) => {
-    setFormData((prev) => ({ ...prev, image: e.target.files[0] }));
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log('Meal Plan Data:', formData);
-    }
-  };
 
-  const validateForm = () => {
-    let isValid = true;
-    const newErrors = {};
-
-    if (!formData.ingredients.trim()) {
-      newErrors.ingredients = 'Please enter ingredients';
-      isValid = false;
-    }
-
-    if (!formData.instructions.trim()) {
-      newErrors.instructions = 'Please enter cooking instructions';
-      isValid = false;
+    // Check if any field is empty
+    if (
+      !formData.ingredients ||
+      !formData.cookingInstructions ||
+      !formData.description ||
+      formData.images.length === 0
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please fill out all fields!",
+      });
+      return;
     }
 
-    if (!formData.description.trim()) {
-      newErrors.description = 'Please enter a description';
-      isValid = false;
+    try {
+      if (formData.images.length < 1)
+        return setError("You must upload at least one image");
+      setLoading(true);
+      setError(false);
+      const response = await axios.post(
+        "http://localhost:8087/api/v1/meal/save",
+        {
+          ...formData,
+        }
+      );
+      const data = response.data;
+      setLoading(false);
+      if (data.success === false) {
+        setError(data.message);
+      }
+      Swal.fire("Success!", "Your Meal Plan has been added.", "success").then(
+        () => {
+          navigate("/");
+        }
+      );
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
     }
-
-    if (!formData.image) {
-      newErrors.image = 'Please upload an image';
-      isValid = false;
-    }
-
-    setErrors(newErrors);
-    return isValid;
   };
 
   return (
-    <div className="PlanSharing">
-      <section className="flex items-center sticky top-0 bg-opacity-95 px-4">
-        <KeyboardBackspaceIcon
-          className="cursor-pointer"
-          onClick={handleBack}
-        />
-        <h1 className="py-5 text-xl font-bold opacity-90">Meal Plan</h1>
-      </section>
-      <div className="form-container">
-        <Form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <Form.Label className="form-label">Ingredients</Form.Label>
-            <Form.Control className="form-input" type="text" name="ingredients" value={formData.ingredients} onChange={handleChange} />
-            {errors.ingredients && <span className="error">{errors.ingredients}</span>}
-          </div>
-          <div className="mb-4">
-            <Form.Label className="form-label">Cooking Instructions</Form.Label>
-            <Form.Control className="form-input" type="text" name="instructions" value={formData.instructions} onChange={handleChange} />
-            {errors.instructions && <span className="error">{errors.instructions}</span>}
-          </div>
-          <div className="mb-4">
-            <Form.Label className="form-label">Description</Form.Label>
-            <Form.Control className="form-input" as="textarea" name="description" value={formData.description} onChange={handleChange} rows={4} />
-            {errors.description && <span className="error">{errors.description}</span>}
-          </div>
-          <div className="mb-4">
-            <Form.Label className="form-label">Upload Image</Form.Label>
-            <Form.Control className="form-input" type="file" onChange={handleImageUpload} />
-            {errors.image && <span className="error">{errors.image}</span>}
-          </div>
-          <Button className="submit-btn" type="submit">SHARE MEAL PLAN</Button>
-        </Form>
+    <div className="AddPost">
+      <div className="topi">
+        <h2>Create Meal Plan</h2>
       </div>
+      <form>
+        <div className="form-section">
+          <div className="in-sec">
+            <input
+              type="text"
+              placeholder="Ingredients"
+              id="ingredients"
+              required
+              onChange={handleChange}
+              value={formData.ingredients}
+            />
+          </div>
+          <div className="in-sec">
+            <input
+              type="text"
+              placeholder="Cooking Instructions"
+              id="cookingInstructions"
+              required
+              onChange={handleChange}
+              value={formData.cookingInstructions}
+            />
+          </div>
+          <div className="in-sec">
+            <input
+              type="text"
+              placeholder="Description"
+              id="description"
+              required
+              onChange={handleChange}
+              value={formData.description}
+            />
+          </div>
+          <div className="img-upld">
+            <div className="file-sec">
+              <input
+                type="file"
+                required
+                onChange={(e) => setFiles(e.target.files)}
+                id="images"
+                accept="image/*"
+              />
+            </div>
+            <div className="upld-btn">
+              <button
+                type="button"
+                disabled={uploading}
+                onClick={handleImageSubmit}
+              >
+                {uploading ? "Uploading..." : "Upload"}
+              </button>
+            </div>
+          </div>
+
+          <p className="err-msg">{imageUploadError && imageUploadError}</p>
+          {formData.images.map((imageUrl, index) => (
+            <div className="img-view" key={index}>
+              <div className="img-p">
+                <img src={imageUrl} alt="" />
+              </div>
+              <div className="dlt-btn">
+                <button
+                  type="button"
+                  onClick={(e) => handleRemoveImage(index, e)}
+                >
+                  delete
+                </button>
+              </div>
+            </div>
+          ))}
+
+          <div className="upd-btnn">
+            <button onClick={handleSubmit}>Share Meal Plan</button>
+          </div>
+          {error && <p className="err-msg">{error}</p>}
+        </div>
+      </form>
     </div>
   );
-};
+}
 
 export default Sharemealplan;

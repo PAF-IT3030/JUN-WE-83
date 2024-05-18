@@ -10,9 +10,7 @@ public class Post {
 
     @Id
     private String _id;
-
     private String postDescription;
-
     private String[] images; // Adding the image array attribute
 
     public Post(String _id, String postDescription, String[] images) { // Updated constructor
