@@ -11,6 +11,7 @@ import {
 } from "firebase/storage";
 import { app } from "../../firebase";
 
+//Add the post function
 function AddPost() {
   const navigate = useNavigate();
   const [files, setFiles] = useState([]);
@@ -18,6 +19,8 @@ function AddPost() {
     postDescription: "",
     images: [],
   });
+
+  //create the variables
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(false);
