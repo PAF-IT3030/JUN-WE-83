@@ -16,7 +16,6 @@ function Sharemealplan() {
   const [formData, setFormData] = useState({
     ingredients: "",
     cookingInstructions: "",
-    description: "",
     images: [],
   });
   const [imageUploadError, setImageUploadError] = useState(false);
@@ -101,7 +100,6 @@ function Sharemealplan() {
     if (
       !formData.ingredients ||
       !formData.cookingInstructions ||
-      !formData.description ||
       formData.images.length === 0
     ) {
       Swal.fire({
@@ -164,16 +162,6 @@ function Sharemealplan() {
               required
               onChange={handleChange}
               value={formData.cookingInstructions}
-            />
-          </div>
-          <div className="in-sec">
-            <input
-              type="text"
-              placeholder="Description"
-              id="description"
-              required
-              onChange={handleChange}
-              value={formData.description}
             />
           </div>
           <div className="img-upld">

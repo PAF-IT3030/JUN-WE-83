@@ -12,12 +12,10 @@ public class MealPlan {
     private String _id;
     private String ingredients;
     private String cookingInstructions;
-    private String description;
     private String[] images;
 
     public MealPlan(String[] images, String description, String cookingInstructions, String ingredients, String _id) {
         this.images = images;
-        this.description = description;
         this.cookingInstructions = cookingInstructions;
         this.ingredients = ingredients;
         this._id = _id;
@@ -42,14 +40,6 @@ public class MealPlan {
         this.images = images;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getCookingInstructions() {
         return cookingInstructions;
     }
@@ -72,7 +62,6 @@ public class MealPlan {
                 "_id='" + _id + '\'' +
                 ", ingredients='" + ingredients + '\'' +
                 ", cookingInstructions='" + cookingInstructions + '\'' +
-                ", description='" + description + '\'' +
                 ", images=" + Arrays.toString(images) +
                 '}';
     }

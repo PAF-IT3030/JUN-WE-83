@@ -2,6 +2,7 @@ import React from "react";
 import WorkoutStatusCard from "../WorkoutStatusCard/WorkoutStatusCard";
 import PlanSharingCard from "../PlanSharingCard/PlanSharingCard";
 import FitLinkCard from "./FitLinkCard";
+import Mealplancard from "../MealPlanCard/Mealplancard";
 
 const HomeSection = () => {
   return (
@@ -27,6 +28,12 @@ const HomeSection = () => {
         {[1].map((item, index) => (
           <PlanSharingCard key={index} />
         ))}
+
+        <Mealplancard/>
+        
+        {/* {[1].map((item, index) => (
+          <Mealplancard key={index} />
+        ))} */}
       </section>
     </div>
   );
