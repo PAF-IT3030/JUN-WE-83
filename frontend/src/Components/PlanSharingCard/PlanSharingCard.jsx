@@ -165,7 +165,7 @@ function PlanSharingCard() {
 
         <div className="mt-1">
           <div className="cursor-pointer">
-            <p className="p-0 mb-2" style={{ fontSize: "18px" }}>
+            <p className="p-0 mb-2" style={{ fontSize: "18px", width: "550px" }}>
               {workoutPlan.workoutPlans}
             </p>
             <div
@@ -176,26 +176,27 @@ function PlanSharingCard() {
                 style={{
                   marginTop: "4px",
                   color: "green",
-                  fontSize: "18px",
-                  marginLeft: "358px",
+                  fontSize: "20px",
+                  marginLeft: "200px",
                   fontWeight: 600,
                 }}
               >
-                My Plans
+                MY PLANS
               </p>
               <div className="flex flex-row mt-2">
                 <div className="flex flex-col">
+                <h1 style={{ fontSize: "18px", marginLeft: "30px" }}>
+                    Date : {workoutPlan.date}
+                  </h1>
                   <b>
-                    <h1 style={{ fontSize: "24px", marginLeft: "20px" }}>
+                    <h1 style={{ fontSize: "24px", marginLeft: "30px" }}>
                       {workoutPlan.exercise}
                     </h1>
                   </b>
-                  <h1 style={{ fontSize: "20px", marginLeft: "20px" }}>
-                    Date : {workoutPlan.date}
-                  </h1>
+                  
                 </div>
 
-                <div style={{ marginLeft: "238px" }}>
+                <div style={{ marginLeft: "220px" }}>
                   <PendingActionsIcon
                     style={{ width: 60, height: 60, color: "#A05AEA" }}
                   />
@@ -208,7 +209,7 @@ function PlanSharingCard() {
                     fontSize: "18px",
                     fontWeight: 600,
                     textAlign: "center",
-                    marginLeft: "20px",
+                    marginLeft: "30px",
                   }}
                 >
                   Sets : {workoutPlan.sets}
@@ -218,7 +219,7 @@ function PlanSharingCard() {
                     fontSize: "18px",
                     fontWeight: 600,
                     textAlign: "center",
-                    marginLeft: "115px",
+                    marginLeft: "165px",
                   }}
                 >
                   Repetitions : {workoutPlan.repetitions}
@@ -233,7 +234,7 @@ function PlanSharingCard() {
                   marginBottom: "45px",
                 }}
               >
-                <p style={{ textAlign: "justify" }}>
+                <p style={{ textAlign: "justify", marginLeft: "11px" }}>
                   <b> Goals : </b> {workoutPlan.goals}
                 </p>
               </div>
